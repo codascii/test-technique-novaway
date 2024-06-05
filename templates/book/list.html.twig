@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <table class="table">
+        <tr>
+            <th>ISNB </th>
+            <th>Titre </th>
+            <th>Auteur</th>
+            <th>Pages</th>
+            <th>Prix</th>
+            <th>Détail</th>
+        </tr>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.isnb }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author.firstname }} {{ book.author.lastname }}</td>
+                <td>{{ book.nbPage }}</td>
+                <td>{{ book.price }} €</td>
+                <td><a href="{{ path('book_detail', { id : book.id }) }}">👁</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <p class="lead">Bienvenue chez Buy more ! Premier vendeur de biens culturels à Burbank.</p>
+    </div>
+
+    <h2>Les derniers livres du catalogue</h2>
+    <p><a href="{{ path('book_list') }}">Voir tous</a></p>
+    <div class="row">
+        {% for book in lastBooks %}
+            <div class="col-lg-3 media-book-bloc">
+                <h3><a href="{{ path('book_detail', { id : book.id }) }}">{{ book.title }}</a></h3>
+                <h4>{{ book.author.firstname }} {{ book.author.lastname }}</h4>
+                <p>{{ book.price }} €</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h2>Les derniers films du catalogue</h2>
+    <p><a href="{{ path('movie_list') }}">Voir tous</a></p>
+    <div class="row">
+        {% for movie in lastMovies %}
+            <div class="col-lg-3 {{ movie.media == 'DVD' ? 'media-dvd-bloc' : 'media-bluray-bloc' }}">
+                <h3><a href="{{ path('movie_detail', { id : movie.id }) }}">{{ movie.title }}</a></h3>
+                <h4>{{ movie.director.firstname }} {{ movie.director.lastname }}</h4>
+                <p>{{ movie.price }} €</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

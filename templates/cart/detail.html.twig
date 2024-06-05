@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Panier</h2>
+
+    <table class="table">
+        <tr>
+            <th scope="col">Article</th>
+            <th scope="col">Prix unitaire</th>
+            <th scope="col">Quantité</th>
+            <th scope="col">Prix total</th>
+        </tr>
+        {% for key, item in cart %}
+        <tr>
+            {% if item.item.media == 'book' %}
+                <th scope="row" class="media-book-bloc">
+                    {{ item.item.title }}
+                </th>
+            {% elseif item.item.media == 'DVD' %}
+                <th scope="row" class="media-dvd-bloc">
+                    {{ item.item.title }}
+                </th>
+            {% elseif item.item.media == 'BluRay' %}
+                <th scope="row" class="media-bluray-bloc">
+                    {{ item.item.title }}
+                </th>
+            {% endif %}
+            <td>
+                {{ item.item.price }} €
+            </td>
+            <td>
+                <a href="{{ path('cart_decrease', {key: key})}}" title="Retirer">➖</a>
+                {{ item.qty }}
+                <a href="{{ path('cart_increase', {key: key})}}" title="Ajouter">➕</a>
+                &nbsp;&nbsp;&nbsp;
+                <a href="{{ path('cart_decrease', {key: key})}}" title="Supprimer">❌</a>
+            </td>
+            <td>
+                {{ item.item.price * item.qty }} €
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3">Total panier</td>
+            <td>{{ totalPrice }} €</td>
+        </tr>
+    </table>
+
+    {% if app.user and app.user.street and app.user.city and app.user.zipcode %}
+        <a href="{{ path('order_checkout') }}" class="btn btn-primary">Procéder au payement</a>
+    {% else %}
+        Vous devez avoir un compte et une addresse de facturation pour commander
+    {% endif %}
+{% endblock %}

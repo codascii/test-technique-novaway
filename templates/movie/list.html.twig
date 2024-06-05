@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <table class="table">
+        <tr>
+            <th>ASIN</th>
+            <th>Titre</th>
+            <th>Réalisateur</th>
+            <th>Durée</th>
+            <th>Prix</th>
+            <th>Format</th>
+            <th>Détail</th>
+        </tr>
+        {% for movie in movies %}
+            <tr class="{{ movie.media == 'DVD' ? 'media-dvd-bloc' : 'media-bluray-bloc' }}">
+                <td>{{ movie.asin }}</td>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.director.firstname }} {{ movie.director.lastname }}</td>
+                <td>{{ movie.duration }} min</td>
+                <td>{{ movie.price }} €</td>
+                <td>{{ movie.media }}</td>
+                <td><a href="{{ path('movie_detail', { id : movie.id }) }}">👁</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

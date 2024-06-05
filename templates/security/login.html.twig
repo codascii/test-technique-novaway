@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-5 col-md-3">
+                <p>login : sarah.walker@cia.gov.us // password : froyo</p>
+                <form action="{{ path('login') }}" method="post" class="form-login">
+                    <h4>Welcome back.</h4>
+                    <input type="text" id="username" placeholder="nom d'utilisateur"
+                           class="form-control input-sm chat-input" name="_username" value="{{ last_username }}"/>
+                    </br>
+                    <input type="password" id="password" name="_password" class="form-control input-sm chat-input"
+                           placeholder="mot de passe"/>
+                    </br>
+                    <div class="wrapper">
+                        <span class="group-btn">
+                            <button type="submit" class="btn btn-primary btn-md">Connexion</button>
+                        </span>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

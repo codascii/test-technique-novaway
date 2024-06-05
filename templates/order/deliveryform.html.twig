@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Récapitulatif</h3>
+    <h4>Article{{ (cart|length) > 1 ? 's' }}</h4>
+    <table class="table table-sm">
+    {% for key, item in cart %}
+        <tr>
+            <td>
+                {{ item.qty }}
+            </td>
+            {% if item.item.media == 'book' %}
+                <th scope="row" class="media-book-bloc">
+                    {{ item.item.title }}
+                </th>
+            {% elseif item.item.media == 'DVD' %}
+                <th scope="row" class="media-dvd-bloc">
+                    {{ item.item.title }}
+                </th>
+            {% elseif item.item.media == 'BluRay' %}
+                <th scope="row" class="media-bluray-bloc">
+                    {{ item.item.title }}
+                </th>
+            {% endif %}
+            <td>
+                {{ item.item.price * item.qty }} €
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    <h4>Prix</h4>
+    <table class="table">
+        <tr>
+            <td class="bg-success"><b>HT</b></td>
+            <td>{{ prices.rawPrice|round(2) }} €</td>
+            <td class="bg-success"><b>TVA</b></td>
+            <td>{{ prices.vat|round(2) }} € (20%)</td>
+            <td class="bg-success"><b>TTC</b></td>
+            <td>{{ prices.netPrice }} €</td>
+        </tr>
+    </table>
+    <h4>Addresse de livraison</h4>
+    {{ form(form) }}
+
+
+{% endblock %}

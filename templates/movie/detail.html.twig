@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>{{ movie.title }}</h2>
+    <h3>{{ movie.director.firstname }} {{ movie.director.lastname }} - {{ movie.price }} €</h3>
+    <p><strong>Format :</strong> {{ movie.media }}</p>
+    <p><strong>ASIN :</strong> {{ movie.asin }}</p>
+    <p><strong>Durée :</strong> {{ movie.duration }} minutes</p>
+    <p><strong>Date de sortie :</strong> {{ movie.releaseDate|date('d/m/Y') }}</p>
+    <p><strong>Casting :</strong></p>
+    <ul>
+        {% for actor in movie.cast %}
+            <li>{{ actor.firstname }} {{ actor.lastname }}</li>
+        {% endfor %}
+    </ul>
+    <p><strong>Résumé</strong></p>
+    <p>{{ movie.summary }}</p>
+
+    <a href="{{ path('movie_add_to_cart', { id : movie.id }) }}" class="btn btn-primary">Ajouter au panier</a>
+{% endblock %}
