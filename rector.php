@@ -13,6 +13,7 @@ return RectorConfig::configure()
         new AnnotationToAttribute('Doctrine\ORM\Mapping\ManyToMany'),
         new AnnotationToAttribute('Doctrine\ORM\Mapping\ManyToOne'),
         new AnnotationToAttribute('Doctrine\ORM\Mapping\OneToMany'),
+        new AnnotationToAttribute('Doctrine\ORM\Mapping\Table'),
         new AnnotationToAttribute('Symfony\Component\Routing\Annotation\Route'),
     ])
     // register single rule

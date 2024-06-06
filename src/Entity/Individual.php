@@ -47,6 +47,4 @@ abstract class Individual
     {
         return $this->lastname;
     }
-
-
 }

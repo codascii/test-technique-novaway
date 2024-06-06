@@ -6,9 +6,7 @@ namespace App\Entity;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="purchase_oder")
- */
+#[ORM\Table(name: 'purchase_oder')]
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 final class Order
 {
