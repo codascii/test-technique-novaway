@@ -10,16 +10,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/deconnexion", name="logout")
-     */
+    #[Route(path: '/deconnexion', name: 'logout')]
     public function logout()
     {
     }
 
-    /**
-     * @Route("/connexion", name="login")
-     */
+    #[Route(path: '/connexion', name: 'login')]
     public function login(Request $request, AuthenticationUtils $authenticationUtils)
     {
         $error = $authenticationUtils->getLastAuthenticationError();

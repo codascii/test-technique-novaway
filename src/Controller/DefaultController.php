@@ -29,9 +29,7 @@ class DefaultController extends AbstractController
         $this->movieRepository = $movieRepository;
     }
 
-    /**
-     * @Route("/", name="homepage")
-     */
+    #[Route(path: '/', name: 'homepage')]
     public function index()
     {
         return $this->render('default/index.html.twig', [

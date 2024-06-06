@@ -9,9 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CartController extends AbstractController
 {
-    /**
-     * @Route("/panier/", name="cart_detail")
-     */
+    #[Route(path: '/panier', name: 'cart_detail')]
     public function listing(): Response
     {
         $session = $this->get('session');
@@ -25,9 +23,7 @@ class CartController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/panier/supprimer/{key}", name="cart_remove")
-     */
+    #[Route(path: '/panier/supprimer/{key}', name: 'cart_remove')]
     public function delete($key): Response
     {
         $session = $this->get('session');
@@ -38,9 +34,7 @@ class CartController extends AbstractController
         return $this->listing();
     }
 
-    /**
-     * @Route("/panier/ajouter/{key}", name="cart_increase")
-     */
+    #[Route(path: '/panier/ajouter/{key}', name: 'cart_increase')]
     public function increase($key): Response
     {
         $session = $this->get('session');
@@ -51,9 +45,7 @@ class CartController extends AbstractController
         return $this->listing();
     }
 
-    /**
-     * @Route("/panier/retirer/{key}", name="cart_decrease")
-     */
+    #[Route(path: '/panier/retirer/{key}', name: 'cart_decrease')]
     public function decrease($key): Response
     {
         $session = $this->get('session');

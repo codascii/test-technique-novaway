@@ -11,9 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MovieController extends AbstractController
 {
-    /**
-     * @Route("/films/", name="movie_list")
-     */
+    #[Route(path: '/films', name: 'movie_list')]
     public function list(): Response
     {
         $movies = $this->get(MovieRepository::class)->findAll();
@@ -22,9 +20,7 @@ class MovieController extends AbstractController
             'movies' => $movies,
         ]);
     }
-    /**
-     * @Route("/film/{id}", name="movie_detail")
-     */
+    #[Route(path: '/film/{id}', name: 'movie_detail')]
     public function detail(Movie $movie): Response
     {
         return $this->render('movie/detail.html.twig', [
@@ -32,9 +28,7 @@ class MovieController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/film/{id}/ajouter-au-panier", name="movie_add_to_cart")
-     */
+    #[Route(path: '/film/{id}/ajouter-au-panier', name: 'movie_add_to_cart')]
     public function addToCart(Movie $movie): Response
     {
         $session = $this->get('session');

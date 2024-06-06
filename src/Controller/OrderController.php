@@ -15,9 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends AbstractController
 {
-    /**
-     * @Route("/commande/initier", name="order_checkout")
-     */
+    #[Route(path: '/commande/initier', name: 'order_checkout')]
     public function checkout(Request $request, OrderRepository $repository): Response
     {
         $session = $this->get('session');
@@ -54,9 +52,7 @@ class OrderController extends AbstractController
 //
     }
 
-    /**
-     * @Route("/commande/valider/{id}", name="order_validate")
-     */
+    #[Route(path: '/commande/valider/{id}', name: 'order_validate')]
     public function valdate(Order $order): Response
     {
         return $this->render('order/summary.html.twig', [

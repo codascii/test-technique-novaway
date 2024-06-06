@@ -11,9 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BookController extends AbstractController
 {
-    /**
-     * @Route("/livres/", name="book_list")
-     */
+    #[Route(path: '/livres', name: 'book_list')]
     public function list(): Response
     {
         $books = $this->get(BookRepository::class)->findAll();
@@ -31,9 +29,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/livre/{id}/ajouter-au-panier", name="book_add_to_cart")
-     */
+    #[Route(path: '/livre/{id}/ajouter-au-panier', name: 'book_add_to_cart')]
     public function addToCart(Book $book): Response
     {
         $session = $this->get('session');
