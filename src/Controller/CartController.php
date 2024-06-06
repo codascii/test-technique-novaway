@@ -31,7 +31,7 @@ final class CartController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/panier/supprimer/{key}', name: 'cart_remove')]
+    #[Route(path: '/panier/supprimer/{key}', name: 'cart_remove', requirements: ['key' => '[a-zA-Z0-9]+'])]
     public function delete($key): Response
     {
         $cart = $this->session->get('cart', []);
@@ -41,7 +41,7 @@ final class CartController extends AbstractController
         return $this->listing();
     }
 
-    #[Route(path: '/panier/ajouter/{key}', name: 'cart_increase')]
+    #[Route(path: '/panier/ajouter/{key}', name: 'cart_increase', requirements: ['key' => '[a-zA-Z0-9]+'])]
     public function increase($key): Response
     {
         $cart = $this->session->get('cart', []);
@@ -51,7 +51,7 @@ final class CartController extends AbstractController
         return $this->listing();
     }
 
-    #[Route(path: '/panier/retirer/{key}', name: 'cart_decrease')]
+    #[Route(path: '/panier/retirer/{key}', name: 'cart_decrease', requirements: ['key' => '[a-zA-Z0-9]+'])]
     public function decrease($key): Response
     {
         $cart = $this->session->get('cart', []);

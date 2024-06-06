@@ -51,7 +51,7 @@ final class OrderController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/commande/valider/{id}', name: 'order_validate')]
+    #[Route(path: '/commande/valider/{id}', name: 'order_validate', requirements: ['id' => '\d+'])]
     public function valdate(Order $order): Response
     {
         return $this->render('order/summary.html.twig', [

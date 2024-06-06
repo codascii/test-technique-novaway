@@ -25,7 +25,7 @@ final class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/livre/{id}', name: 'book_detail')]
+    #[Route('/livre/{id}', name: 'book_detail', requirements: ['id' => '\d+'])]
     public function detail(Book $book): Response
     {
         return $this->render('book/detail.html.twig', [
@@ -33,7 +33,7 @@ final class BookController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/livre/{id}/ajouter-au-panier', name: 'book_add_to_cart')]
+    #[Route(path: '/livre/{id}/ajouter-au-panier', name: 'book_add_to_cart', requirements: ['id' => '\d+'])]
     public function addToCart(Book $book, SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);

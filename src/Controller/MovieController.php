@@ -24,7 +24,7 @@ final class MovieController extends AbstractController
             'movies' => $movies,
         ]);
     }
-    #[Route(path: '/film/{id}', name: 'movie_detail')]
+    #[Route(path: '/film/{id}', name: 'movie_detail', requirements: ['id' => '\d+'])]
     public function detail(Movie $movie): Response
     {
         return $this->render('movie/detail.html.twig', [
@@ -32,7 +32,7 @@ final class MovieController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/film/{id}/ajouter-au-panier', name: 'movie_add_to_cart')]
+    #[Route(path: '/film/{id}/ajouter-au-panier', name: 'movie_add_to_cart', requirements: ['id' => '\d+'])]
     public function addToCart(Movie $movie, SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);
