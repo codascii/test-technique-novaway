@@ -36,7 +36,7 @@ final class CartController extends AbstractController
     }
 
     #[Route(path: '/panier/supprimer/{key}', name: 'cart_remove', requirements: ['key' => '[A-Z0-9]+'])]
-    public function delete($key): Response
+    public function delete(string $key): Response
     {
         $cart = $this->session->get('cart', []);
         unset($cart[$key]);
@@ -46,7 +46,7 @@ final class CartController extends AbstractController
     }
 
     #[Route(path: '/panier/ajouter/{key}', name: 'cart_increase', requirements: ['key' => '[A-Z0-9]+'])]
-    public function increase($key): Response
+    public function increase(string $key): Response
     {
         $cart = $this->session->get('cart', []);
         ++$cart[$key]['qty'];
@@ -56,7 +56,7 @@ final class CartController extends AbstractController
     }
 
     #[Route(path: '/panier/retirer/{key}', name: 'cart_decrease', requirements: ['key' => '[A-Z0-9]+'])]
-    public function decrease($key): Response
+    public function decrease(string $key): Response
     {
         $cart = $this->session->get('cart', []);
         $qty = $cart[$key]['qty']--;
