@@ -9,23 +9,21 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 final class Book
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=10)
      */
+    #[ORM\Column(type: 'string', length: 10)]
     private $isnb;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
+    #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
     /**
@@ -36,37 +34,30 @@ final class Book
 
     /**
      * @var \DateTimeInterface
-     * @ORM\Column(type="date")
      */
+    #[ORM\Column(type: 'date')]
     private $publishDate;
 
     /**
      * @var integer
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     private $nbPage;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     private $summary;
 
     /**
      * @var float
-     * @ORM\Column(type="float")
      */
+    #[ORM\Column(type: 'float')]
     private $price;
 
     /**
      * Book constructor.
-     * @param string $isnb
-     * @param string $title
-     * @param Individual $author
-     * @param \DateTimeInterface $publishDate
-     * @param int $nbPage
-     * @param string $summary
-     * @param float $price
      */
     public function __construct(string $isnb, string $title, Individual $author, \DateTimeInterface $publishDate, int $nbPage, string $summary, float $price)
     {
@@ -119,33 +110,21 @@ final class Book
         return $this->publishDate;
     }
 
-    /**
-     * @return int
-     */
     public function getNbPage(): int
     {
         return $this->nbPage;
     }
 
-    /**
-     * @return string
-     */
     public function getSummary(): string
     {
         return $this->summary;
     }
 
-    /**
-     * @return float
-     */
     public function getPrice(): float
     {
         return $this->price;
     }
 
-    /**
-     * @return string
-     */
     public function getMedia(): string
     {
         return 'book';

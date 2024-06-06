@@ -12,41 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 final class Order
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     private $deliveryStreet;
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     private $deliveryZipcode;
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     private $deliveryCity;
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     private $cart;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: 'float')]
     private $price;
 
     /**
      * Order constructor.
-     * @param string $deliveryStreet
-     * @param string $deliveryZipcode
-     * @param string $deliveryCity
-     * @param array $cart
      */
     public function __construct(string $deliveryStreet, string $deliveryZipcode, string $deliveryCity, array $cart, float $price)
     {
@@ -65,33 +49,21 @@ final class Order
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getDeliveryStreet(): string
     {
         return $this->deliveryStreet;
     }
 
-    /**
-     * @return string
-     */
     public function getDeliveryZipcode(): string
     {
         return $this->deliveryZipcode;
     }
 
-    /**
-     * @return string
-     */
     public function getDeliveryCity(): string
     {
         return $this->deliveryCity;
     }
 
-    /**
-     * @return array
-     */
     public function getCart(): array
     {
         return \json_decode($this->cart, true);
