@@ -10,6 +10,9 @@ return RectorConfig::configure()
         new AnnotationToAttribute('Doctrine\ORM\Mapping\Entity'),
         new AnnotationToAttribute('Doctrine\ORM\Mapping\GeneratedValue'),
         new AnnotationToAttribute('Doctrine\ORM\Mapping\Id'),
+        new AnnotationToAttribute('Doctrine\ORM\Mapping\ManyToMany'),
+        new AnnotationToAttribute('Doctrine\ORM\Mapping\ManyToOne'),
+        new AnnotationToAttribute('Doctrine\ORM\Mapping\OneToMany'),
         new AnnotationToAttribute('Symfony\Component\Routing\Annotation\Route'),
     ])
     // register single rule
