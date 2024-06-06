@@ -11,14 +11,14 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends AbstractController
 {
     #[Route(path: '/commande/initier', name: 'order_checkout')]
-    public function checkout(Request $request, OrderRepository $repository): Response
+    public function checkout(Request $request, OrderRepository $repository, SessionInterface $session): Response
     {
-        $session = $this->get('session');
         $cart = $session->get('cart', []);
 
         $totalPrice = array_sum(array_map(function ($item) {
@@ -49,7 +49,6 @@ class OrderController extends AbstractController
             'prices' => VATCalculator::getPriceArray($totalPrice),
             'form' => $form->createView()
         ]);
-//
     }
 
     #[Route(path: '/commande/valider/{id}', name: 'order_validate')]

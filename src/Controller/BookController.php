@@ -7,6 +7,7 @@ use App\Entity\Book;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BookController extends AbstractController
@@ -33,10 +34,8 @@ class BookController extends AbstractController
     }
 
     #[Route(path: '/livre/{id}/ajouter-au-panier', name: 'book_add_to_cart')]
-    public function addToCart(Book $book): Response
+    public function addToCart(Book $book, SessionInterface $session): Response
     {
-        $session = $this->get('session');
-
         $cart = $session->get('cart', []);
         $cart[$book->getIsnb()] = [ 'item' => $book , 'qty' => ($cart[$book->getIsnb()]['qty'] ?? 0) + 1 ];
         $session->set('cart', $cart);
