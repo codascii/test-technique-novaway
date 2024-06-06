@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  */
-class BluRay extends Movie
+final class BluRay extends Movie
 {
     public function getMedia(): string
     {

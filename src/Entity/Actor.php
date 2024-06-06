@@ -8,6 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  */
-class Actor extends Individual
+final class Actor extends Individual
 {
 }

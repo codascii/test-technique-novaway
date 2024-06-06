@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class OrderController extends AbstractController
+final class OrderController extends AbstractController
 {
     #[Route(path: '/commande/initier', name: 'order_checkout')]
     public function checkout(Request $request, OrderRepository $repository, SessionInterface $session): Response

@@ -7,7 +7,7 @@ use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends AbstractController
+final class DefaultController extends AbstractController
 {
     /** @var BookRepository */
     private $bookRepository;

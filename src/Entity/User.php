@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements PasswordAuthenticatedUserInterface, UserInterface, \Serializable
+final class User implements PasswordAuthenticatedUserInterface, UserInterface, \Serializable
 {
     /**
      * @ORM\Column(type="integer")

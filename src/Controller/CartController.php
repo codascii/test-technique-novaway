@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CartController extends AbstractController
+final class CartController extends AbstractController
 {
     private ?SessionInterface $session = null;
 

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
  * @ORM\Table(name="purchase_oder")
  */
-class Order
+final class Order
 {
     /**
      * @ORM\Column(type="integer")

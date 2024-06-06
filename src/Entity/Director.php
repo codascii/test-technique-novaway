@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  */
-class Director extends Individual
+final class Director extends Individual
 {
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Movie", mappedBy="director")
