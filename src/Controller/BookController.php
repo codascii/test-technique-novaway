@@ -11,10 +11,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BookController extends AbstractController
 {
+    public function __construct(private BookRepository $bookRepository)
+    {}
+
     #[Route(path: '/livres', name: 'book_list')]
     public function list(): Response
     {
-        $books = $this->get(BookRepository::class)->findAll();
+        $books = $this->bookRepository->findAll();
 
         return $this->render('book/list.html.twig', [
             'books' => $books,

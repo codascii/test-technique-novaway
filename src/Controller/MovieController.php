@@ -11,10 +11,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MovieController extends AbstractController
 {
+    public function __construct(private MovieRepository $movieRepository)
+    {}
+
     #[Route(path: '/films', name: 'movie_list')]
     public function list(): Response
     {
-        $movies = $this->get(MovieRepository::class)->findAll();
+        $movies = $this->movieRepository->findAll();
 
         return $this->render('movie/list.html.twig', [
             'movies' => $movies,
