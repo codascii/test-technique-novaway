@@ -37,7 +37,12 @@ final class BookController extends AbstractController
     public function addToCart(Book $book, SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);
-        $cart[$book->getIsnb()] = [ 'item' => $book , 'qty' => ($cart[$book->getIsnb()]['qty'] ?? 0) + 1 ];
+        $cartKey = $book->getIsnb();
+
+        // Récupération de la quantité déjà présente dans le panier, sinon 0.
+        $currentQuantity = $cart[$cartKey]['qty'] ?? 0;
+
+        $cart[$cartKey] = [ 'item' => $book , 'qty' => $currentQuantity + 1 ];
         $session->set('cart', $cart);
 
         return $this->detail($book);

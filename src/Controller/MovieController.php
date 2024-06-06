@@ -36,7 +36,12 @@ final class MovieController extends AbstractController
     public function addToCart(Movie $movie, SessionInterface $session): Response
     {
         $cart = $session->get('cart', []);
-        $cart[$movie->getAsin()] = [ 'item' => $movie , 'qty' => ($cart[$movie->getAsin()]['qty'] ?? 0) + 1 ];
+        $cartKey = $movie->getAsin();
+
+        // Récupération de la quantité déjà présente dans le panier, sinon 0.
+        $currentQuantity = $cart[$cartKey]['qty'] ?? 0;
+
+        $cart[$cartKey] = [ 'item' => $movie , 'qty' => $currentQuantity + 1 ];
         $session->set('cart', $cart);
 
         return $this->detail($movie);
