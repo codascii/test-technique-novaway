@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
- */
+#[ORM\Entity(repositoryClass: BookRepository::class)]
 final class Book
 {
     /**

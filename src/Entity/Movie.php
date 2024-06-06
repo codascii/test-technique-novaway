@@ -3,15 +3,16 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MovieRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discriminator", type="string")
  * @ORM\DiscriminatorMap({"dvd" = "Dvd", "br" = "BluRay"})
  */
+#[ORM\Entity(repositoryClass: MovieRepository::class)]
 abstract class Movie
 {
     /**

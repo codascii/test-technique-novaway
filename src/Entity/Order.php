@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
  * @ORM\Table(name="purchase_oder")
  */
+#[ORM\Entity(repositoryClass: OrderRepository::class)]
 final class Order
 {
     /**

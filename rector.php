@@ -7,6 +7,7 @@ use Rector\Php80\ValueObject\AnnotationToAttribute;
 return RectorConfig::configure()
     ->withConfiguredRule(AnnotationToAttributeRector::class, [
         new AnnotationToAttribute('Symfony\Component\Routing\Annotation\Route'),
+        new AnnotationToAttribute('Doctrine\ORM\Mapping\Entity'),
     ])
     // register single rule
     ->withRules([
