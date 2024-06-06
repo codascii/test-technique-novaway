@@ -38,6 +38,14 @@ abstract class Individual
         $this->lastname = $lastname;
     }
 
+    /**
+     * Get the value of id
+     */
+    public function getId():int
+    {
+        return $this->id;
+    }
+
     public function getFirstname(): string
     {
         return $this->firstname;
