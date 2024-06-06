@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  */
-final class Writer extends Individual
+class Writer extends Individual
 {
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="author")
