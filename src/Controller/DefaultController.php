@@ -13,7 +13,7 @@ class DefaultController extends AbstractController
     private $bookRepository;
 
     /** @var MovieRepository */
-    private $filmRepository;
+    private $movieRepository;
 
     /**
      * DefaultController constructor.
