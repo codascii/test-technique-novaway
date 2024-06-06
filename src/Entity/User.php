@@ -98,6 +98,11 @@ final class User implements PasswordAuthenticatedUserInterface, UserInterface, \
         return array('ROLE_USER');
     }
 
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
     public function eraseCredentials()
     {
     }
