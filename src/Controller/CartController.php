@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Interface\PriceInterface;
+use App\Helper\CartHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,12 +26,7 @@ final class CartController extends AbstractController
 
         return $this->render('cart/detail.html.twig', [
             'cart' => $cart,
-            'totalPrice' => array_sum(array_map(function ($item) {
-                /** @var PriceInterface $cartItem */
-                $cartItem = $item['item'];
-
-                return $cartItem->getPrice() * $item['qty'];
-            }, $cart)),
+            'totalPrice' => CartHelper::getTotalPrice($cart),
         ]);
     }
 

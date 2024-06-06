@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Helper\CartHelper;
 use App\Helper\VATCalculator;
 use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,9 +22,7 @@ final class OrderController extends AbstractController
     {
         $cart = $session->get('cart', []);
 
-        $totalPrice = array_sum(array_map(function ($item) {
-            return $item['item']->getPrice() * $item['qty'];
-        }, $cart));
+        $totalPrice = CartHelper::getTotalPrice($cart);
 
         $form = $this->createFormBuilder()
             ->add('address', TextType::class, ['label' => 'Adresse'])
