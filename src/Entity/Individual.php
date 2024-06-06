@@ -3,14 +3,15 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\IndividualRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="MovieRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discriminator", type="string")
  * @ORM\DiscriminatorMap({"actor" = "Actor", "writer" = "Writer", "director" = "Director"})
  */
+#[ORM\Entity(repositoryClass: IndividualRepository::class)]
 abstract class Individual
 {
     /**
