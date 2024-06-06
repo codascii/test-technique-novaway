@@ -19,10 +19,13 @@ final class Order
 
     #[ORM\Column(type: 'string')]
     private $deliveryStreet;
+
     #[ORM\Column(type: 'string')]
     private $deliveryZipcode;
+
     #[ORM\Column(type: 'string')]
     private $deliveryCity;
+    
     #[ORM\Column(type: 'string')]
     private $cart;
 

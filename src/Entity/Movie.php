@@ -32,14 +32,14 @@ abstract class Movie
 
     /**
      * @var Director
-     * @ORM\ManyToOne(targetEntity="Director", inversedBy="movies")
      */
+    #[ORM\ManyToOne(targetEntity: Director::class, inversedBy: 'movies')]
     private $director;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|Actor[]
-     * @ORM\ManyToMany(targetEntity="Actor", cascade={"persist"}, fetch="EAGER")
      */
+    #[ORM\ManyToMany(targetEntity: Actor::class, cascade: ['persist'], fetch: 'EAGER')]
     private $cast;
 
     /**

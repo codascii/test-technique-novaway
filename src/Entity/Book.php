@@ -28,8 +28,8 @@ final class Book
 
     /**
      * @var Writer
-     * @ORM\ManyToOne(targetEntity="App\Entity\Writer", inversedBy="books")
      */
+    #[ORM\ManyToOne(targetEntity: Writer::class, inversedBy: 'books')]
     private $author;
 
     /**
@@ -78,33 +78,21 @@ final class Book
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getIsnb(): string
     {
         return $this->isnb;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return Individual
-     */
     public function getAuthor(): Individual
     {
         return $this->author;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
     public function getPublishDate(): \DateTimeInterface
     {
         return $this->publishDate;
