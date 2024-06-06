@@ -100,9 +100,19 @@ abstract class Movie
         return $this->title;
     }
 
-    public function getDirector(): Individual
+    public function getDirector(): ?Director
     {
         return $this->director;
+    }
+
+    /**
+     * Set the value of director
+     */
+    public function setDirector(?Director $director): self
+    {
+        $this->director = $director;
+
+        return $this;
     }
 
     /**
