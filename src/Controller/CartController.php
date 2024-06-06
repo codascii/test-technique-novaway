@@ -13,7 +13,7 @@ class CartController extends AbstractController
 {
     private ?SessionInterface $session = null;
 
-    public function __construct(private RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack)
     {
         $this->session = $requestStack->getSession();
     }
