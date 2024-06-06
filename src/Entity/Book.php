@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Interface\PriceInterface;
 use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
-final class Book
+final class Book implements PriceInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
