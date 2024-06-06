@@ -59,7 +59,7 @@ final class Book
     /**
      * Book constructor.
      */
-    public function __construct(string $isnb, string $title, Individual $author, \DateTimeInterface $publishDate, int $nbPage, string $summary, float $price)
+    public function __construct(string $isnb, string $title, Writer $author, \DateTimeInterface $publishDate, int $nbPage, string $summary, float $price)
     {
         $this->isnb = $isnb;
         $this->title = $title;
@@ -88,9 +88,19 @@ final class Book
         return $this->title;
     }
 
-    public function getAuthor(): Individual
+    public function getAuthor(): ?Writer
     {
         return $this->author;
+    }
+
+    /**
+     * Set the value of author
+     */
+    public function setAuthor(?Writer $author): self
+    {
+        $this->author = $author;
+
+        return $this;
     }
 
     public function getPublishDate(): \DateTimeInterface
