@@ -6,11 +6,9 @@ namespace App\Entity;
 use App\Repository\IndividualRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discriminator", type="string")
- * @ORM\DiscriminatorMap({"actor" = "Actor", "writer" = "Writer", "director" = "Director"})
- */
+#[ORM\InheritanceType("SINGLE_TABLE")]
+#[ORM\DiscriminatorColumn(name: "discriminator", type: "string")]
+#[ORM\DiscriminatorMap(["actor" => "Actor", "writer" => "Writer", "director" => "Director"])]
 #[ORM\Entity(repositoryClass: IndividualRepository::class)]
 abstract class Individual
 {
