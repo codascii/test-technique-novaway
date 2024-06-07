@@ -16,7 +16,9 @@
         {% for book in lastBooks %}
             <div class="col-lg-3 p-1">
                 <div class="media-bloc media-book-bloc p-3">
-                    <h3><a href="{{ path('book_detail', { id : book.id }) }}">{{ book.title }}</a></h3>
+                    <h3 class="text-truncate" data-toggle="tooltip" data-placement="left" title="{{ book.title }}">
+                        <a href="{{ path('book_detail', { id : book.id }) }}">{{ book.title }}</a>
+                    </h3>
                     <h4>{{ book.author.firstname }} {{ book.author.lastname }}</h4>
                     <p>{{ book.price|number_format(2, ',', '.') }} €</p>
                 </div>
@@ -30,7 +32,9 @@
         {% for movie in lastMovies %}
             <div class="col-lg-3 p-1">
                 <div class="p-3 media-bloc {{ movie.media == 'DVD' ? 'media-dvd-bloc' : 'media-bluray-bloc' }}">
-                    <h3><a href="{{ path('movie_detail', { id : movie.id }) }}">{{ movie.title }}</a></h3>
+                    <h3 class="text-truncate"  data-toggle="tooltip" data-placement="left" title="{{ movie.title }}">
+                        <a href="{{ path('movie_detail', { id : movie.id }) }}">{{ movie.title }}</a>
+                    </h3>
                     <h4>{{ movie.director.firstname }} {{ movie.director.lastname }}</h4>
                     <p>{{ movie.price|number_format(2, ',', '.') }} €</p>
                 </div>
