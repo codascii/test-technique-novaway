@@ -46,7 +46,10 @@
     </table>
 
     {% if app.user and app.user.street and app.user.city and app.user.zipcode %}
-        <a href="{{ path('order_checkout') }}" class="btn btn-primary">Procéder au payement</a>
+        <a href="{{ path('order_checkout') }}" class="btn btn-primary btn-lg">
+            <i class="bi bi-credit-card"></i>
+            <span>Procéder au payement</span>
+        </a>
     {% else %}
         Vous devez avoir un compte et une addresse de facturation pour commander
     {% endif %}
