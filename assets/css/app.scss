@@ -1,3 +1,4 @@
+@import './override-variables';
 @import '../../node_modules/bootstrap/scss/bootstrap';
 
 /* Sticky footer styles
@@ -26,11 +27,15 @@ body {
 }
 
 .media-book-bloc {
-  background-color: #faf2cc;
+  background-color: $secondary;
 }
 .media-dvd-bloc {
-  background-color: #ebcccc;
+  background-color: $gray-200;
 }
 .media-bluray-bloc {
-  background-color: #8fcafe;
+  background-color: $gray-100;
+}
+
+.media-bloc {
+  border-radius: 10px;
 }
