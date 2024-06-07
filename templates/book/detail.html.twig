@@ -2,7 +2,7 @@
 
 {% block body %}
     <h2>{{ book.title }}</h2>
-    <h3>{{ book.author.firstname }} {{ book.author.lastname }} - {{ book.price }} €</h3>
+    <h3>{{ book.author.firstname }} {{ book.author.lastname }} - {{ book.price|number_format(2, ',', '.') }} €</h3>
     <p><strong>ISNB :</strong> {{ book.isnb }}</p>
     <p><strong>Pages :</strong> {{ book.nbPage }}</p>
     <p><strong>Date de publication :</strong> {{ book.publishDate|date('d/m/Y') }}</p>

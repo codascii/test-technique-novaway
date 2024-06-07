@@ -18,7 +18,7 @@
                 <div class="media-bloc media-book-bloc p-3">
                     <h3><a href="{{ path('book_detail', { id : book.id }) }}">{{ book.title }}</a></h3>
                     <h4>{{ book.author.firstname }} {{ book.author.lastname }}</h4>
-                    <p>{{ book.price }} €</p>
+                    <p>{{ book.price|number_format(2, ',', '.') }} €</p>
                 </div>
             </div>
         {% endfor %}
@@ -32,7 +32,7 @@
                 <div class="p-3 media-bloc {{ movie.media == 'DVD' ? 'media-dvd-bloc' : 'media-bluray-bloc' }}">
                     <h3><a href="{{ path('movie_detail', { id : movie.id }) }}">{{ movie.title }}</a></h3>
                     <h4>{{ movie.director.firstname }} {{ movie.director.lastname }}</h4>
-                    <p>{{ movie.price }} €</p>
+                    <p>{{ movie.price|number_format(2, ',', '.') }} €</p>
                 </div>
             </div>
         {% endfor %}

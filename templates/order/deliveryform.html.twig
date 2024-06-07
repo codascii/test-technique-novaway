@@ -23,7 +23,7 @@
                 </th>
             {% endif %}
             <td>
-                {{ item.item.price * item.qty }} €
+                {{ (item.item.price * item.qty)|number_format(2, ',', '.') }} €
             </td>
         </tr>
     {% endfor %}
@@ -32,11 +32,11 @@
     <table class="table">
         <tr>
             <td class="bg-success"><b>HT</b></td>
-            <td>{{ prices.rawPrice|round(2) }} €</td>
+            <td>{{ prices.rawPrice|number_format(2, ',', '.') }} €</td>
             <td class="bg-success"><b>TVA</b></td>
-            <td>{{ prices.vat|round(2) }} € (20%)</td>
+            <td>{{ prices.vat|number_format(2, ',', '.') }} € (20%)</td>
             <td class="bg-success"><b>TTC</b></td>
-            <td>{{ prices.netPrice }} €</td>
+            <td>{{ prices.netPrice|number_format(2, ',', '.') }} €</td>
         </tr>
     </table>
     <h4>Addresse de livraison</h4>

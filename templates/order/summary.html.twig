@@ -6,7 +6,7 @@
     <table class="table">
         <tr>
             <th scope="row" role="rowheader">Montant</th>
-            <td>{{ order.price }} €</td>
+            <td>{{ order.price|number_format(2, ',', '.') }} €</td>
         </tr>
     </table>
     <table class="table">
