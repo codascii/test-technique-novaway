@@ -2,29 +2,38 @@
 
 {% block body %}
     <div class="jumbotron">
-        <p class="lead">Bienvenue chez Buy more ! Premier vendeur de biens culturels à Burbank.</p>
+        <h1 class="display-4">Bienvenue chez Buy more !</h1>
+        <p class="lead"> Premier vendeur de biens culturels à Burbank.</p>
+        <hr class="my-4">
+        <p>Comment pouvons-nous vous aider ? Êtes-vous film ou plutôt livre ? Chez Buy more, vous avez le choix.</p>
+        <a class="btn btn-secondary btn-lg" href="{{ path('movie_list') }}" role="button">Voir tous les films</a>
+        <a class="btn btn-outline-primary btn-lg" href="{{ path('book_list') }}" role="button">Voir tous les livres</a>
     </div>
 
     <h2>Les derniers livres du catalogue</h2>
     <p><a href="{{ path('book_list') }}">Voir tous</a></p>
-    <div class="row">
+    <div class="row mb-5">
         {% for book in lastBooks %}
-            <div class="col-lg-3 media-book-bloc">
-                <h3><a href="{{ path('book_detail', { id : book.id }) }}">{{ book.title }}</a></h3>
-                <h4>{{ book.author.firstname }} {{ book.author.lastname }}</h4>
-                <p>{{ book.price }} €</p>
+            <div class="col-lg-3 p-1">
+                <div class="media-bloc media-book-bloc p-3">
+                    <h3><a href="{{ path('book_detail', { id : book.id }) }}">{{ book.title }}</a></h3>
+                    <h4>{{ book.author.firstname }} {{ book.author.lastname }}</h4>
+                    <p>{{ book.price }} €</p>
+                </div>
             </div>
         {% endfor %}
     </div>
 
     <h2>Les derniers films du catalogue</h2>
     <p><a href="{{ path('movie_list') }}">Voir tous</a></p>
-    <div class="row">
+    <div class="row d-flex">
         {% for movie in lastMovies %}
-            <div class="col-lg-3 {{ movie.media == 'DVD' ? 'media-dvd-bloc' : 'media-bluray-bloc' }}">
-                <h3><a href="{{ path('movie_detail', { id : movie.id }) }}">{{ movie.title }}</a></h3>
-                <h4>{{ movie.director.firstname }} {{ movie.director.lastname }}</h4>
-                <p>{{ movie.price }} €</p>
+            <div class="col-lg-3 p-1">
+                <div class="p-3 media-bloc {{ movie.media == 'DVD' ? 'media-dvd-bloc' : 'media-bluray-bloc' }}">
+                    <h3><a href="{{ path('movie_detail', { id : movie.id }) }}">{{ movie.title }}</a></h3>
+                    <h4>{{ movie.director.firstname }} {{ movie.director.lastname }}</h4>
+                    <p>{{ movie.price }} €</p>
+                </div>
             </div>
         {% endfor %}
     </div>
