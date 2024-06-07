@@ -21,6 +21,10 @@
                     </h3>
                     <h4 class="home-individual-name">{{ book.author.displayName }}</h4>
                     <p>{{ book.price|number_format(2, ',', '.') }} €</p>
+                    <a href="{{ path('book_add_to_cart', { id : book.id }) }}" class="btn btn-outline-primary" role="button">
+                        <i class="bi bi-cart-plus"></i>
+                        <span>Ajouter au panier</span>
+                    </a>
                 </div>
             </div>
         {% endfor %}
@@ -37,6 +41,10 @@
                     </h3>
                     <h4 class="home-individual-name">{{ movie.director.displayName }}</h4>
                     <p>{{ movie.media}} · {{ movie.price|number_format(2, ',', '.') }} €</p>
+                    <a href="{{ path('movie_add_to_cart', { id : movie.id }) }}" class="btn btn-secondary" role="button">
+                        <i class="bi bi-cart-plus"></i>
+                        <span>Ajouter au panier</span>
+                    </a>
                 </div>
             </div>
         {% endfor %}
