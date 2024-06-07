@@ -22,6 +22,12 @@ final class OrderController extends AbstractController
     {
         $cart = $session->get('cart', []);
 
+        // S'il n'y a pas d'élément dans le panier, on redirige l'utilisateur vers la page "Panier"
+        if (0 == count($cart)) {
+            $this->addFlash("error", "Impossible de procéder au paiement car vous n'avez aucun produit dans votre panier");
+            return $this->redirectToRoute('cart_detail');
+        }
+
         $totalPrice = CartHelper::getTotalPrice($cart);
 
         $form = $this->createFormBuilder()
