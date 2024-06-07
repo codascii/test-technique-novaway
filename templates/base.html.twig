@@ -11,38 +11,46 @@
     </head>
     <body>
 
-            <header class="header container clearfix">
-                <nav>
+        <header class="header clearfix mb-5">
+            <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ path('homepage') }}">
+                        <img src="/img/BuyMoreLogo.png" alt="Buy More Logo" width="200">
+                    </a>
                     <ul class="nav nav-pills float-right">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('cart_detail') }}">
-                                Panier ({{ app.session.get('cart')|length }})
+                            <a class="nav-link text-secondary" href="{{ path('cart_detail') }}">
+                                <span>Panier ({{ app.session.get('cart')|length }})</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            {% if is_granted('ROLE_USER') %}
-                                <a class="nav-link" href="{{ path('logout') }}">Déconnexion</a>
-                                {{ app.user.email }}
-                            {% else %}
-                                <a class="nav-link" href="{{ path('login') }}">Connexion</a>
-                            {% endif %}
-                        </li>
+                        {% if is_granted('ROLE_USER') %}
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary" href="{{ path('logout') }}">Déconnexion</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light disabled" href="#">{{ app.user.email }}</a>                                
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary" href="{{ path('login') }}">Connexion</a>
+                            </li>
+                        {% endif %}
                     </ul>
-                </nav>
-                <h3 class="text-muted"><a href="{{ path('homepage') }}"><img src="/img/BuyMoreLogo.png" alt=""></a></h3>
-            </header>
-
-            <main role="main" class="container">
-            {% block body %}{% endblock %}
-            </main>
-            <footer class="footer">
-                <div class="container">
-                    <span class="text-muted">© Novaway 2023</span>
                 </div>
-            </footer>
-            {% block javascripts %}
-                {{ encore_entry_script_tags('app') }}
-            {% endblock %}
+            </nav>
+        </header>
+
+        <main role="main" class="container">
+            {% block body %}{% endblock %}
+        </main>
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted">© Novaway 2023</span>
+            </div>
+        </footer>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
 
     </body>
 </html>
