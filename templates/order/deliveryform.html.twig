@@ -1,45 +1,50 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h3>Récapitulatif</h3>
+    <h1 class="mb-5">Récapitulatif</h1>
     <h4>Article{{ (cart|length) > 1 ? 's' }}</h4>
-    <table class="table table-sm">
-    {% for key, item in cart %}
-        <tr>
-            <td>
-                {{ item.qty }}
-            </td>
-            {% if item.item.media == 'book' %}
-                <th scope="row" class="media-book-bloc">
-                    {{ item.item.title }}
-                </th>
-            {% elseif item.item.media == 'DVD' %}
-                <th scope="row" class="media-dvd-bloc">
-                    {{ item.item.title }}
-                </th>
-            {% elseif item.item.media == 'BluRay' %}
-                <th scope="row" class="media-bluray-bloc">
-                    {{ item.item.title }}
-                </th>
-            {% endif %}
-            <td>
-                {{ (item.item.price * item.qty)|number_format(2, ',', '.') }} €
-            </td>
-        </tr>
-    {% endfor %}
+    <table class="table table-sm table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Quantité</th>
+                <th scope="col">Article</th>
+                <th scope="col">Prix total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, item in cart %}
+                <tr>
+                    <td>
+                        {{ item.qty }}
+                    </td>
+                    <th scope="row">
+                        <p class="m-0">{{ item.item.title }}</p>
+                        {% if item.item.media == 'book' %}
+                            <p class="font-weight-lighter m-0">Livre</p>
+                        {% else  %}
+                            <p class="font-weight-lighter m-0">{{ item.item.media }}</p>
+                        {% endif %}
+                    </th>
+                    <td>
+                        {{ (item.item.price * item.qty)|number_format(2, ',', '.') }} €
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
-    <h4>Prix</h4>
-    <table class="table">
+    <h4 class="mt-1">Prix</h4>
+    <table class="table table-bordered">
         <tr>
-            <td class="bg-success"><b>HT</b></td>
+            <td class="bg-light"><b>HT</b></td>
             <td>{{ prices.rawPrice|number_format(2, ',', '.') }} €</td>
-            <td class="bg-success"><b>TVA</b></td>
+            <td class="bg-light"><b>TVA</b></td>
             <td>{{ prices.vat|number_format(2, ',', '.') }} € (20%)</td>
-            <td class="bg-success"><b>TTC</b></td>
+            <td class="bg-light"><b>TTC</b></td>
             <td>{{ prices.netPrice|number_format(2, ',', '.') }} €</td>
         </tr>
     </table>
-    <h4>Addresse de livraison</h4>
+    <hr class="divider my-5" />
+    <h4 class="mt-5">Addresse de livraison</h4>
     {{ form(form) }}
 
 
