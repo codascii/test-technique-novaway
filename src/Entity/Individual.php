@@ -55,4 +55,9 @@ abstract class Individual
     {
         return $this->lastname;
     }
+
+    public function displayName(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
 }

@@ -2,7 +2,7 @@
 
 {% block body %}
     <h2>{{ movie.title }}</h2>
-    <h3>{{ movie.director.firstname }} {{ movie.director.lastname }} - {{ movie.price|number_format(2, ',', '.') }} €</h3>
+    <h3>{{ movie.director.displayName }} - {{ movie.price|number_format(2, ',', '.') }} €</h3>
     <p><strong>Format :</strong> {{ movie.media }}</p>
     <p><strong>ASIN :</strong> {{ movie.asin }}</p>
     <p><strong>Durée :</strong> {{ movie.duration }} minutes</p>

@@ -14,7 +14,7 @@
             <tr>
                 <td>{{ book.isnb }}</td>
                 <td>{{ book.title }}</td>
-                <td>{{ book.author.firstname }} {{ book.author.lastname }}</td>
+                <td>{{ book.author.displayName }}</td>
                 <td>{{ book.nbPage }}</td>
                 <td>{{ book.price|number_format(2, ',', '.') }} €</td>
                 <td><a href="{{ path('book_detail', { id : book.id }) }}">👁</a></td>
