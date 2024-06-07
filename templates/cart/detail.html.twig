@@ -3,47 +3,46 @@
 {% block body %}
     <h2>Panier</h2>
 
-    <table class="table">
-        <tr>
-            <th scope="col">Article</th>
-            <th scope="col">Prix unitaire</th>
-            <th scope="col">Quantité</th>
-            <th scope="col">Prix total</th>
-        </tr>
-        {% for key, item in cart %}
-        <tr>
-            {% if item.item.media == 'book' %}
-                <th scope="row" class="media-book-bloc">
-                    {{ item.item.title }}
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Article</th>
+                <th scope="col">Prix unitaire</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Prix total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, item in cart %}
+            <tr>
+                <th scope="row">
+                    <p class="m-0">{{ item.item.title }}</p>
+                    {% if item.item.media == 'book' %}
+                        <p class="font-weight-lighter m-0">Livre</p>
+                    {% else  %}
+                        <p class="font-weight-lighter m-0">{{ item.item.media }}</p>
+                    {% endif %}
                 </th>
-            {% elseif item.item.media == 'DVD' %}
-                <th scope="row" class="media-dvd-bloc">
-                    {{ item.item.title }}
-                </th>
-            {% elseif item.item.media == 'BluRay' %}
-                <th scope="row" class="media-bluray-bloc">
-                    {{ item.item.title }}
-                </th>
-            {% endif %}
-            <td>
-                {{ item.item.price|number_format(2, ',', '.') }} €
-            </td>
-            <td>
-                <a href="{{ path('cart_decrease', {key: key})}}" title="Retirer">➖</a>
-                {{ item.qty }}
-                <a href="{{ path('cart_increase', {key: key})}}" title="Ajouter">➕</a>
-                &nbsp;&nbsp;&nbsp;
-                <a href="{{ path('cart_decrease', {key: key})}}" title="Supprimer">❌</a>
-            </td>
-            <td>
-                {{ (item.item.price * item.qty)|number_format(2, ',', '.') }} €
-            </td>
-        </tr>
-        {% endfor %}
-        <tr>
-            <td colspan="3">Total panier</td>
-            <td>{{ totalPrice|number_format(2, ',', '.') }} €</td>
-        </tr>
+                <td>
+                    {{ item.item.price|number_format(2, ',', '.') }} €
+                </td>
+                <td>
+                    <a href="{{ path('cart_decrease', {key: key})}}" title="Retirer">➖</a>
+                    {{ item.qty }}
+                    <a href="{{ path('cart_increase', {key: key})}}" title="Ajouter">➕</a>
+                    &nbsp;&nbsp;&nbsp;
+                    <a href="{{ path('cart_decrease', {key: key})}}" title="Supprimer">❌</a>
+                </td>
+                <td>
+                    {{ (item.item.price * item.qty)|number_format(2, ',', '.') }} €
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3">Total panier</td>
+                <td>{{ totalPrice|number_format(2, ',', '.') }} €</td>
+            </tr>
+        </tbody>
     </table>
 
     {% if app.user and app.user.street and app.user.city and app.user.zipcode %}
