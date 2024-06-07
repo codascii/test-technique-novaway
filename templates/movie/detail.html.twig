@@ -16,5 +16,8 @@
     <p><strong>Résumé</strong></p>
     <p>{{ movie.summary }}</p>
 
-    <a href="{{ path('movie_add_to_cart', { id : movie.id }) }}" class="btn btn-primary">Ajouter au panier</a>
+    <a href="{{ path('movie_add_to_cart', { id : movie.id }) }}" class="btn btn-primary">
+        <i class="bi bi-cart-plus"></i>
+        <span>Ajouter au panier</span>
+    </a>
 {% endblock %}
