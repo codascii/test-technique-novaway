@@ -45,6 +45,12 @@ final class BookController extends AbstractController
         $cart[$cartKey] = [ 'item' => $book , 'qty' => $currentQuantity + 1 ];
         $session->set('cart', $cart);
 
+        // Ajout d'un message flash indiquant que le livre est bien ajouté au panier
+        $this->addFlash(
+            'success',
+            'Le livre <strong>' . $book->getTitle() . '</strong> a bien été ajouter au panier.'
+        );
+
         return $this->detail($book);
     }
 }

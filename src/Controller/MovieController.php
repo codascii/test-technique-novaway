@@ -44,6 +44,12 @@ final class MovieController extends AbstractController
         $cart[$cartKey] = [ 'item' => $movie , 'qty' => $currentQuantity + 1 ];
         $session->set('cart', $cart);
 
+        // Ajout d'un message flash indiquant que le livre est bien ajouté au panier
+        $this->addFlash(
+            'success',
+            'Le film <strong>' . $movie->getTitle() . '</strong> a bien été ajouter au panier.'
+        );
+
         return $this->detail($movie);
     }
 }
