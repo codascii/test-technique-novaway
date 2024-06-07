@@ -25,12 +25,24 @@ final class OrderController extends AbstractController
         $totalPrice = CartHelper::getTotalPrice($cart);
 
         $form = $this->createFormBuilder()
-            ->add('address', TextType::class, ['label' => 'Adresse'])
-            ->add('zipcode', TextType::class, ['label' => 'Code postal'])
-            ->add('city', TextType::class, ['label' => 'Ville'])
+            ->add('address', TextType::class, ['label' => 'Adresse',
+                "attr" => [
+                    'placeholder' => "19 Rue des développeurs passionés"
+                ]
+            ])
+            ->add('zipcode', TextType::class, ['label' => 'Code postal',
+                "attr" => [
+                    'placeholder' => "69003"
+                ]
+            ])
+            ->add('city', TextType::class, ['label' => 'Ville', 
+                "attr" => [
+                    'placeholder' => "Lyon"
+                ]
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Valider la commande',
-                'attr' => ['class' => 'btn-success']
+                'attr' => ['class' => 'btn-success btn-lg']
             ])
             ->getForm();
 
