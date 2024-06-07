@@ -45,7 +45,7 @@
                     {{ item.qty }}
                     <a href="{{ path('cart_increase', {key: key})}}" title="Ajouter">➕</a>
                     &nbsp;&nbsp;&nbsp;
-                    <a href="{{ path('cart_decrease', {key: key})}}" title="Supprimer">❌</a>
+                    <a href="{{ path('cart_remove', {key: key})}}" title="Supprimer">❌</a>
                 </td>
                 <td>
                     {{ (item.item.price * item.qty)|number_format(2, ',', '.') }} €
