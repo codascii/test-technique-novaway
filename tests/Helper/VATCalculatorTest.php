@@ -5,7 +5,7 @@ namespace App\Tests\Helper;
 use App\Helper\VATCalculator;
 use PHPUnit\Framework\TestCase;
 
-class VATCalculatorTest extends TestCase
+final class VATCalculatorTest extends TestCase
 {
 
     public function testGetPriceArray()
