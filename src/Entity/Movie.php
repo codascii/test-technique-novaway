@@ -17,25 +17,25 @@ abstract class Movie implements PriceInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 10)]
-    private $asin;
+    private ?string $asin = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 255)]
-    private $title;
+    private ?string $title = null;
 
     /**
      * @var Director
      */
     #[ORM\ManyToOne(targetEntity: Director::class, inversedBy: 'movies')]
-    private $director;
+    private ?Director $director = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|Actor[]
@@ -47,25 +47,25 @@ abstract class Movie implements PriceInterface
      * @var \DateTimeInterface
      */
     #[ORM\Column(type: 'date')]
-    private $releaseDate;
+    private ?\DateTimeInterface $releaseDate = null;
 
     /**
      * @var integer
      */
     #[ORM\Column(type: 'integer')]
-    private $duration;
+    private ?int $duration = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'text')]
-    private $summary;
+    private ?string $summary = null;
 
     /**
      * @var float
      */
     #[ORM\Column(type: 'float')]
-    private $price;
+    private ?float $price = null;
 
     /**
      * Movie constructor.
@@ -96,9 +96,39 @@ abstract class Movie implements PriceInterface
         return $this->asin;
     }
 
+
+    /**
+     * Set the value of asin
+     *
+     * @param ?string $asin
+     *
+     * @return self
+     */
+    public function setAsin(?string $asin): self
+    {
+        $this->asin = $asin;
+
+        return $this;
+    }
+
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+
+    /**
+     * Set the value of title
+     *
+     * @param ?string $title
+     *
+     * @return self
+     */
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
     }
 
     public function getDirector(): ?Director
@@ -106,8 +136,13 @@ abstract class Movie implements PriceInterface
         return $this->director;
     }
 
+
     /**
      * Set the value of director
+     *
+     * @param ?Director $director
+     *
+     * @return self
      */
     public function setDirector(?Director $director): self
     {
@@ -129,9 +164,39 @@ abstract class Movie implements PriceInterface
         return $this->releaseDate;
     }
 
+
+    /**
+     * Set the value of releaseDate
+     *
+     * @param ?\DateTimeInterface $releaseDate
+     *
+     * @return self
+     */
+    public function setReleaseDate(?\DateTimeInterface $releaseDate): self
+    {
+        $this->releaseDate = $releaseDate;
+
+        return $this;
+    }
+
     public function getDuration(): int
     {
         return $this->duration;
+    }
+
+
+    /**
+     * Set the value of duration
+     *
+     * @param ?int $duration
+     *
+     * @return self
+     */
+    public function setDuration(?int $duration): self
+    {
+        $this->duration = $duration;
+
+        return $this;
     }
 
     public function getSummary(): string
@@ -139,9 +204,39 @@ abstract class Movie implements PriceInterface
         return $this->summary;
     }
 
+
+    /**
+     * Set the value of summary
+     *
+     * @param ?string $summary
+     *
+     * @return self
+     */
+    public function setSummary(?string $summary): self
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
     public function getPrice(): float
     {
         return $this->price;
+    }
+
+
+    /**
+     * Set the value of price
+     *
+     * @param ?float $price
+     *
+     * @return self
+     */
+    public function setPrice(?float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
     }
 
     abstract public function getMedia(): string;

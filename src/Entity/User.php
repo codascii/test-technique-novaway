@@ -14,56 +14,101 @@ final class User implements PasswordAuthenticatedUserInterface, UserInterface, \
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 254, unique: true)]
-    private $email;
+    private ?string $email = null;
 
     #[ORM\Column(type: 'string', length: 64)]
-    private $password;
+    private ?string $password = null;
 
     #[ORM\Column(type: 'string')]
-    private $street;
+    private ?string $street = null;
 
     #[ORM\Column(type: 'string', length: 6)]
-    private $zipcode;
+    private ?string $zipcode = null;
 
     #[ORM\Column(type: 'string')]
-    private $city;
+    private ?string $city = null;
 
-    public function getUsername()
+    public function getUsername(): ?string
     {
         return $this->getEmail();
     }
 
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
     /**
-     * @return mixed
+     * @return ?string
      */
-    public function getStreet()
+    public function getStreet(): ?string
     {
         return $this->street;
     }
 
+
     /**
-     * @return mixed
+     * Set the value of street
+     *
+     * @param ?string $street
+     *
+     * @return self
      */
-    public function getZipcode()
+    public function setStreet(?string $street): self
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * @return ?string
+     */
+    public function getZipcode(): ?string
     {
         return $this->zipcode;
     }
 
+
     /**
-     * @return mixed
+     * Set the value of zipcode
+     *
+     * @param ?string $zipcode
+     *
+     * @return self
      */
-    public function getCity()
+    public function setZipcode(?string $zipcode): self
+    {
+        $this->zipcode = $zipcode;
+
+        return $this;
+    }
+
+    /**
+     * @return ?string
+     */
+    public function getCity(): ?string
     {
         return $this->city;
+    }
+
+
+    /**
+     * Set the value of city
+     *
+     * @param ?string $city
+     *
+     * @return self
+     */
+    public function setCity(?string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
     }
 
     public function getSalt()

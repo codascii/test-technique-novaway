@@ -15,19 +15,19 @@ abstract class Individual
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string')]
-    private $firstname;
+    private ?string $firstname = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string')]
-    private $lastname;
+    private ?string $lastname = null;
 
     /**
      * Individual constructor.
@@ -41,22 +41,50 @@ abstract class Individual
     /**
      * Get the value of id
      */
-    public function getId():int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getFirstname(): string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
-    public function getLastname(): string
+    /**
+     * Set the value of firstname
+     *
+     * @param ?string $firstname
+     *
+     * @return self
+     */
+    public function setFirstname(?string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
-    public function displayName(): string
+    /**
+     * Set the value of lastname
+     *
+     * @param ?string $lastname
+     *
+     * @return self
+     */
+    public function setLastname(?string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function displayName(): ?string
     {
         return $this->firstname . ' ' . $this->lastname;
     }

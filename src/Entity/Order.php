@@ -13,22 +13,22 @@ final class Order
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string')]
-    private $deliveryStreet;
+    private ?string $deliveryStreet = null;
 
     #[ORM\Column(type: 'string')]
-    private $deliveryZipcode;
+    private ?string $deliveryZipcode = null;
 
     #[ORM\Column(type: 'string')]
-    private $deliveryCity;
+    private ?string $deliveryCity = null;
     
     #[ORM\Column(type: 'string')]
-    private $cart;
+    private ?string $cart = null;
 
     #[ORM\Column(type: 'float')]
-    private $price;
+    private ?float $price = null;
 
     /**
      * Order constructor.
@@ -43,9 +43,9 @@ final class Order
     }
 
     /**
-     * @return int
+     * @return ?int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -55,14 +55,59 @@ final class Order
         return $this->deliveryStreet;
     }
 
-    public function getDeliveryZipcode(): string
+
+    /**
+     * Set the value of deliveryStreet
+     *
+     * @param ?string $deliveryStreet
+     *
+     * @return self
+     */
+    public function setDeliveryStreet(?string $deliveryStreet): self
+    {
+        $this->deliveryStreet = $deliveryStreet;
+
+        return $this;
+    }
+
+    public function getDeliveryZipcode(): ?string
     {
         return $this->deliveryZipcode;
     }
 
-    public function getDeliveryCity(): string
+
+    /**
+     * Set the value of deliveryZipcode
+     *
+     * @param ?string $deliveryZipcode
+     *
+     * @return self
+     */
+    public function setDeliveryZipcode(?string $deliveryZipcode): self
+    {
+        $this->deliveryZipcode = $deliveryZipcode;
+
+        return $this;
+    }
+
+    public function getDeliveryCity(): ?string
     {
         return $this->deliveryCity;
+    }
+
+
+    /**
+     * Set the value of deliveryCity
+     *
+     * @param ?string $deliveryCity
+     *
+     * @return self
+     */
+    public function setDeliveryCity(?string $deliveryCity): self
+    {
+        $this->deliveryCity = $deliveryCity;
+
+        return $this;
     }
 
     public function getCart(): array
@@ -70,11 +115,41 @@ final class Order
         return \json_decode($this->cart, true);
     }
 
+
     /**
-     * @return mixed
+     * Set the value of cart
+     *
+     * @param ?string $cart
+     *
+     * @return self
      */
-    public function getPrice()
+    public function setCart(?string $cart): self
+    {
+        $this->cart = $cart;
+
+        return $this;
+    }
+
+    /**
+     * @return ?float
+     */
+    public function getPrice(): ?float
     {
         return $this->price;
+    }
+
+
+    /**
+     * Set the value of price
+     *
+     * @param ?float $price
+     *
+     * @return self
+     */
+    public function setPrice(?float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
     }
 }

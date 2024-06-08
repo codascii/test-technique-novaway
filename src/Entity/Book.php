@@ -13,49 +13,49 @@ final class Book implements PriceInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 10)]
-    private $isnb;
+    private ?string $isnb = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 255)]
-    private $title;
+    private ?string $title = null;
 
     /**
      * @var Writer
      */
     #[ORM\ManyToOne(targetEntity: Writer::class, inversedBy: 'books')]
-    private $author;
+    private ?Writer $author = null;
 
     /**
      * @var \DateTimeInterface
      */
     #[ORM\Column(type: 'date')]
-    private $publishDate;
+    private ?\DateTimeInterface $publishDate = null;
 
     /**
      * @var integer
      */
     #[ORM\Column(type: 'integer')]
-    private $nbPage;
+    private ?int $nbPage = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'text')]
-    private $summary;
+    private ?string $summary = null;
 
     /**
      * @var float
      */
     #[ORM\Column(type: 'float')]
-    private $price;
+    private ?float $price = null;
 
     /**
      * Book constructor.
@@ -72,21 +72,51 @@ final class Book implements PriceInterface
     }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIsnb(): string
+    public function getIsnb(): ?string
     {
         return $this->isnb;
     }
 
-    public function getTitle(): string
+
+    /**
+     * Set the value of isnb
+     *
+     * @param ?string $isnb
+     *
+     * @return self
+     */
+    public function setIsnb(?string $isnb): self
+    {
+        $this->isnb = $isnb;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
     {
         return $this->title;
+    }
+
+
+    /**
+     * Set the value of title
+     *
+     * @param ?string $title
+     *
+     * @return self
+     */
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
     }
 
     public function getAuthor(): ?Writer
@@ -94,8 +124,13 @@ final class Book implements PriceInterface
         return $this->author;
     }
 
+
     /**
      * Set the value of author
+     *
+     * @param ?Writer $author
+     *
+     * @return self
      */
     public function setAuthor(?Writer $author): self
     {
@@ -104,27 +139,87 @@ final class Book implements PriceInterface
         return $this;
     }
 
-    public function getPublishDate(): \DateTimeInterface
+    public function getPublishDate(): ?\DateTimeInterface
     {
         return $this->publishDate;
     }
 
-    public function getNbPage(): int
+
+    /**
+     * Set the value of publishDate
+     *
+     * @param ?\DateTimeInterface $publishDate
+     *
+     * @return self
+     */
+    public function setPublishDate(?\DateTimeInterface $publishDate): self
+    {
+        $this->publishDate = $publishDate;
+
+        return $this;
+    }
+
+    public function getNbPage(): ?int
     {
         return $this->nbPage;
     }
 
-    public function getSummary(): string
+
+    /**
+     * Set the value of nbPage
+     *
+     * @param ?int $nbPage
+     *
+     * @return self
+     */
+    public function setNbPage(?int $nbPage): self
+    {
+        $this->nbPage = $nbPage;
+
+        return $this;
+    }
+
+    public function getSummary(): ?string
     {
         return $this->summary;
     }
 
-    public function getPrice(): float
+
+    /**
+     * Set the value of summary
+     *
+     * @param ?string $summary
+     *
+     * @return self
+     */
+    public function setSummary(?string $summary): self
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function getMedia(): string
+
+    /**
+     * Set the value of price
+     *
+     * @param ?float $price
+     *
+     * @return self
+     */
+    public function setPrice(?float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getMedia(): ?string
     {
         return 'book';
     }

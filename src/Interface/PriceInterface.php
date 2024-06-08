@@ -7,5 +7,5 @@ interface PriceInterface
     /**
      * Retourne le prix.
      */
-    public function getPrice(): float;
+    public function getPrice(): ?float;
 }
