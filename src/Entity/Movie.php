@@ -69,9 +69,9 @@ abstract class Movie implements PriceInterface
 
     /**
      * Movie constructor.
-     * @param $id
+     * @param int $id
      */
-    public function __construct($id, string $asin, string $title, \DateTimeInterface $releaseDate, int $duration, string $summary, float $price, array $cast)
+    public function __construct(int $id, string $asin, string $title, \DateTimeInterface $releaseDate, int $duration, string $summary, float $price, array $cast)
     {
         $this->id = $id;
         $this->asin = $asin;
