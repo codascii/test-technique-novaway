@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {{ book.title }} - {{parent()}}
+{% endblock %}
+
 {% block body %}
     {% for message in app.flashes('success') %}
         <div class="flash-success">

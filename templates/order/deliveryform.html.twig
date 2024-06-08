@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Récapitulatif de votre commande - {{parent()}}
+{% endblock %}
+
 {% block body %}
     <h1 class="mb-5">Récapitulatif</h1>
     <h4>Article{{ (cart|length) > 1 ? 's' }}</h4>
