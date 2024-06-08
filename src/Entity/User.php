@@ -135,28 +135,23 @@ final class User implements PasswordAuthenticatedUserInterface, UserInterface
     {
     }
 
-    public function __serialize(): array
+    /** @see \Serializable::serialize() */
+    public function serialize()
     {
-        return [
-          'id' => $this->id,
-          'email' => $this->email,
-          'password' => $this->password,
-          'street' => $this->street,
-          'zipcode' => $this->zipcode,
-          'city' => $this->city,
-        ];
+        return \serialize([
+            $this->id,
+            $this->email,
+            $this->password,
+        ]);
     }
 
-    public function __unserialize(array $data): void
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
     {
-        // Pour chaque champ du tableau $data
-        // On set la valeur s'il existe un setter dans la classe
-        foreach($data as $key => $value) {
-            $method = 'set' . \ucfirst($key);
-
-            if (\method_exists(self::class, $method)) {
-                $this->$method($value);
-            }
-        }
+        list (
+            $this->id,
+            $this->email,
+            $this->password,
+            ) = \unserialize($serialized, ['allowed_classes' => false]);
     }
 }
