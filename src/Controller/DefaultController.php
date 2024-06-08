@@ -10,10 +10,10 @@ use Symfony\Component\Routing\Annotation\Route;
 final class DefaultController extends AbstractController
 {
     /** @var BookRepository */
-    private $bookRepository;
+    private ?BookRepository $bookRepository = null;
 
     /** @var MovieRepository */
-    private $movieRepository;
+    private ?MovieRepository $movieRepository = null;
 
     /**
      * DefaultController constructor.
