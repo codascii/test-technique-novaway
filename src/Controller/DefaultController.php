@@ -33,8 +33,8 @@ final class DefaultController extends AbstractController
     public function index()
     {
         return $this->render('default/index.html.twig', [
-            'lastBooks' => $this->bookRepository->getLastFour(),
-            'lastMovies' => $this->movieRepository->getLastFour(),
+            'lastBooks' => $this->bookRepository->getLast(),
+            'lastMovies' => $this->movieRepository->getLast(),
         ]);
     }
 }
