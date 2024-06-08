@@ -13,8 +13,11 @@ class Writer extends Individual
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: "author")]
     private ?Collection $books;
 
-    public function __construct()
+    public function __construct(string $firstname, string $lastname)
     {
+        // Appel du constructeur de `Individual`
+        parent::__construct($firstname, $lastname);
+        
         $this->books = new ArrayCollection();
     }
 

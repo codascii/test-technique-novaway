@@ -13,8 +13,11 @@ class Director extends Individual
     #[ORM\OneToMany(targetEntity: Movie::class, mappedBy: "director")]
     private ?Collection $movies;
 
-    public function __construct()
+    public function __construct(string $firstname, string $lastname)
     {
+        // Appel du constructeur de `Individual`
+        parent::__construct($firstname, $lastname);
+        
         $this->movies = new ArrayCollection();
     }
 
