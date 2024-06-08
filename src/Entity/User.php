@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-final class User implements PasswordAuthenticatedUserInterface, UserInterface, \Serializable
+final class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
     #[ORM\Column(type: 'integer')]
     #[ORM\Id]
@@ -135,23 +135,28 @@ final class User implements PasswordAuthenticatedUserInterface, UserInterface, \
     {
     }
 
-    /** @see \Serializable::serialize() */
-    public function serialize()
+    public function __serialize(): array
     {
-        return \serialize([
-            $this->id,
-            $this->email,
-            $this->password,
-        ]);
+        return [
+          'id' => $this->id,
+          'email' => $this->email,
+          'password' => $this->password,
+          'street' => $this->street,
+          'zipcode' => $this->zipcode,
+          'city' => $this->city,
+        ];
     }
 
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
+    public function __unserialize(array $data): void
     {
-        list (
-            $this->id,
-            $this->email,
-            $this->password,
-            ) = \unserialize($serialized, ['allowed_classes' => false]);
+        // Pour chaque champ du tableau $data
+        // On set la valeur s'il existe un setter dans la classe
+        foreach($data as $key => $value) {
+            $method = 'set' . \ucfirst($key);
+
+            if (\method_exists(self::class, $method)) {
+                $this->$method($value);
+            }
+        }
     }
 }
