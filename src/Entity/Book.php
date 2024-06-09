@@ -6,6 +6,7 @@ namespace App\Entity;
 use App\Interface\PriceInterface;
 use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 final class Book implements PriceInterface
@@ -19,12 +20,18 @@ final class Book implements PriceInterface
      * @var string
      */
     #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\Isbn(
+        type: Assert\Isbn::ISBN_10,
+        isbn10Message: "{{value}} n'est pas un valide ISBN 10",
+    )]
     private ?string $isnb = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "Le titre du livre est obligatoire.")]
+    #[Assert\Length(min: 3, minMessage: "Le titre du livre doit contenir au moins 3 caractères.")]
     private ?string $title = null;
 
     /**
@@ -43,18 +50,24 @@ final class Book implements PriceInterface
      * @var integer
      */
     #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank(message: "Le nombre de page du livre est obligatoire.")]
+    #[Assert\Positive(message: "Le nombre de page doit être positif.")]
     private ?int $nbPage = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: "Le résumé du livre est obligatoire.")]
+    #[Assert\Length(min: 50, minMessage: "Le résumé du livre doit contenir au moins 50 caractères.")]
     private ?string $summary = null;
 
     /**
      * @var float
      */
     #[ORM\Column(type: 'float')]
+    #[Assert\NotBlank(message: "Le prix du livre est obligatoire.")]
+    #[Assert\Positive(message: "Le prix doit être positif.")]
     private ?float $price = null;
 
     /**

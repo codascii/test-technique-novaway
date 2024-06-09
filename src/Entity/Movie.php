@@ -7,6 +7,7 @@ use App\Interface\PriceInterface;
 use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\InheritanceType("SINGLE_TABLE")]
 #[ORM\DiscriminatorColumn(name: "discriminator", type: "string")]
@@ -23,12 +24,16 @@ abstract class Movie implements PriceInterface
      * @var string
      */
     #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\NotBlank(message: "L'ASIN du film est obligatoire.")]
+    #[Assert\Length(max: 10, maxMessage: "La longueur de l'ASIN du film ne doit pas excéder 10 caractères.")]
     private ?string $asin = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "Le titre du film est obligatoire.")]
+    #[Assert\Length(min: 3, minMessage: "Le titre du film doit contenir au moins 3 caractères.")]
     private ?string $title = null;
 
     /**
@@ -53,18 +58,22 @@ abstract class Movie implements PriceInterface
      * @var integer
      */
     #[ORM\Column(type: 'integer')]
+    #[Assert\Positive(message: "La durée du film doit être un nombre postif.")]
     private ?int $duration = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: "Le résumé du film est obligatoire.")]
+    #[Assert\Length(min: 50, minMessage: "Le résumé du film doit contenir au moins 50 caractères.")]
     private ?string $summary = null;
 
     /**
      * @var float
      */
     #[ORM\Column(type: 'float')]
+    #[Assert\Positive(message: "Le prix doit être positif.")]
     private ?float $price = null;
 
     /**

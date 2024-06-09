@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 final class User implements PasswordAuthenticatedUserInterface, UserInterface
@@ -17,18 +18,29 @@ final class User implements PasswordAuthenticatedUserInterface, UserInterface
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 254, unique: true)]
+    #[Assert\NotBlank(message: "L'adresse email est obligatoire.")]
+    #[Assert\Email(message: "L'adresse email {{ value }} n'est pas valide")]
+    #[Assert\Unique]
     private ?string $email = null;
 
     #[ORM\Column(type: 'string', length: 64)]
+    #[Assert\NotBlank(message: "Le mot de passe est obligatoire.")]
+    #[Assert\Length(min: 8, minMessage: "Le mot de passe doit avoir au moins 8 caractères.")]
     private ?string $password = null;
 
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "L'adresse de l'utilisateur est obligatoire.")]
+    #[Assert\Length(min: 10, minMessage: "L'adresse de l'utilisateur doit avoir au moins 10 caractères.")]
     private ?string $street = null;
 
     #[ORM\Column(type: 'string', length: 6)]
+    #[Assert\NotBlank(message: "Le code postale de l'utilisateur est obligatoire.")]
+    #[Assert\Length(exactly: 5, exactMessage: "Le code postale de l'utilisateur doit avoir exactement 5 caractères.")]
     private ?string $zipcode = null;
 
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "La ville de l'utilisateur est obligatoire.")]
+    #[Assert\Length(min: 2, minMessage: "La ville de l'utilisateur doit avoir au moins 2 caractères.")]
     private ?string $city = null;
 
     public function getUsername(): ?string

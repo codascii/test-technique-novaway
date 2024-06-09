@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'purchase_oder')]
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -16,18 +17,27 @@ final class Order
     private ?int $id = null;
 
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "L'adresse de livraison est obligatoire.")]
+    #[Assert\Length(min: 5, minMessage: "L'adresse de livraison doit avoir au moins 5 caractères.")]
     private ?string $deliveryStreet = null;
 
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "Le code postal est obligatoire.")]
+    #[Assert\Length(exactly: 5, exactMessage: "Le code postal doit avoir exactement 5 caractères.")]
     private ?string $deliveryZipcode = null;
 
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "La ville de livraison est obligatoire.")]
+    #[Assert\Length(min: 2, minMessage: "La ville de livraison doit avoir au moins 2 caractères.")]
     private ?string $deliveryCity = null;
     
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "Le panier de la commande est obligatoire.")]
+    #[Assert\Json(message: "La panier doit être un objet json valid.")]
     private ?string $cart = null;
 
     #[ORM\Column(type: 'float')]
+    #[Assert\Positive(message: "Le prix doit être positif.")]
     private ?float $price = null;
 
     /**

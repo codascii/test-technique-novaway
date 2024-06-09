@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\Repository\IndividualRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\InheritanceType("SINGLE_TABLE")]
 #[ORM\DiscriminatorColumn(name: "discriminator", type: "string")]
@@ -21,12 +22,16 @@ abstract class Individual
      * @var string
      */
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "Le prénom est obligatoire.")]
+    #[Assert\Length(min: 3, minMessage: "Le prénom doit contenir au moins 3 caractères.")]
     private ?string $firstname = null;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "Le nom de famille est obligatoire.")]
+    #[Assert\Length(min: 3, minMessage: "Le nom de famille doit contenir au moins 3 caractères.")]
     private ?string $lastname = null;
 
     /**
