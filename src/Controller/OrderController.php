@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Sequentially;
 
 final class OrderController extends AbstractController
 {
@@ -31,17 +34,38 @@ final class OrderController extends AbstractController
         $totalPrice = CartHelper::getTotalPrice($cart);
 
         $form = $this->createFormBuilder()
-            ->add('address', TextType::class, ['label' => 'Adresse',
+            ->add('address', TextType::class, [
+                'label' => 'Adresse',
+                "required" => true,
+                "empty_data" => "",
+                "constraints" => new Sequentially([
+                    new NotBlank(message: "L'adresse de livraison est obligatoire."),
+                    new Length(min: 5, minMessage: "L'adresse de livraison doit avoir au moins 5 caractères.")
+                ]),
                 "attr" => [
                     'placeholder' => "19 Rue des développeurs passionés"
                 ]
             ])
-            ->add('zipcode', TextType::class, ['label' => 'Code postal',
+            ->add('zipcode', TextType::class, [
+                'label' => 'Code postal',
+                "required" => true,
+                "empty_data" => "",
+                "constraints" => new Sequentially([
+                    new NotBlank(message: "Le code postal est obligatoire."),
+                    new Length(exactly: 5, exactMessage: "Le code postal doit avoir exactement 5 caractères.")
+                ]),
                 "attr" => [
                     'placeholder' => "69003"
                 ]
             ])
-            ->add('city', TextType::class, ['label' => 'Ville', 
+            ->add('city', TextType::class, [
+                'label' => 'Ville', 
+                "required" => true,
+                "empty_data" => "",
+                "constraints" => new Sequentially( [
+                    new NotBlank(message: "La ville de livraison est obligatoire."),
+                    new Length(min: 2, minMessage: "La ville de livraison doit avoir au moins 2 caractères.")
+                ]),
                 "attr" => [
                     'placeholder' => "Lyon"
                 ]
