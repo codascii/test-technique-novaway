@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Sequentially;
+use ZipCodeValidator\Constraints\ZipCode;
 
 final class OrderController extends AbstractController
 {
@@ -52,7 +53,11 @@ final class OrderController extends AbstractController
                 "empty_data" => "",
                 "constraints" => new Sequentially([
                     new NotBlank(message: "Le code postal est obligatoire."),
-                    new Length(exactly: 5, exactMessage: "Le code postal doit avoir exactement 5 caractères.")
+                    new Length(exactly: 5, exactMessage: "Le code postal doit avoir exactement 5 caractères."),
+                    new ZipCode([
+                        "iso" => "FR",
+                        "message" => "Veuillez renseigner un code postale valide."
+                    ])
                 ]),
                 "attr" => [
                     'placeholder' => "69003"
