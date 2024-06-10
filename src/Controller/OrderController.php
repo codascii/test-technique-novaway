@@ -76,8 +76,8 @@ final class OrderController extends AbstractController
                 ]
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Valider la commande',
-                'attr' => ['class' => 'btn-success btn-lg']
+                'label' => ' Valider la commande',
+                'attr' => ['class' => 'bi bi-check2-circle btn-success btn-lg']
             ])
             ->getForm();
 
