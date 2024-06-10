@@ -4,8 +4,63 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1feaa26bb891195656f4877064fb7c95",
+    "content-hash": "5f9045fc6f566839f48d2e0175856338",
     "packages": [
+        {
+            "name": "barbieswimcrew/zip-code-validator",
+            "version": "v3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barbieswimcrew/zip-code-validator.git",
+                "reference": "6109e4745aa45d14eee8d3c627bf6bf1a97f5866"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barbieswimcrew/zip-code-validator/zipball/6109e4745aa45d14eee8d3c627bf6bf1a97f5866",
+                "reference": "6109e4745aa45d14eee8d3c627bf6bf1a97f5866",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "symfony/validator": ">=4.4.40"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.6 || ^10.5 || ^11.0.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ZipCodeValidator\\": "src/ZipCodeValidator"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Schindler"
+                }
+            ],
+            "description": "Constraint class for international zipcode validation",
+            "keywords": [
+                "constraint",
+                "constraints",
+                "form",
+                "postal code",
+                "postalcode",
+                "symfony",
+                "validation",
+                "validator",
+                "zip code",
+                "zipcode"
+            ],
+            "support": {
+                "issues": "https://github.com/barbieswimcrew/zip-code-validator/issues",
+                "source": "https://github.com/barbieswimcrew/zip-code-validator/tree/v3.1.1"
+            },
+            "time": "2024-02-18T18:12:38+00:00"
+        },
         {
             "name": "doctrine/annotations",
             "version": "2.0.1",

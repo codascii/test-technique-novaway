@@ -4,6 +4,7 @@
     "require": {
         "php": "^8.0",
         "ext-iconv": "*",
+        "barbieswimcrew/zip-code-validator": "^3.1",
         "doctrine/annotations": "^2.0",
         "doctrine/doctrine-bundle": "^2.10",
         "doctrine/doctrine-migrations-bundle": "^3.2",
