@@ -3,73 +3,77 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Interface\PriceInterface;
+use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
- */
-class Book
+#[ORM\Entity(repositoryClass: BookRepository::class)]
+final class Book implements PriceInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=10)
      */
-    private $isnb;
+    #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\Isbn(
+        type: Assert\Isbn::ISBN_10,
+        isbn10Message: "{{value}} n'est pas un valide ISBN 10",
+    )]
+    private ?string $isnb = null;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "Le titre du livre est obligatoire.")]
+    #[Assert\Length(min: 3, minMessage: "Le titre du livre doit contenir au moins 3 caractères.")]
+    private ?string $title = null;
 
     /**
      * @var Writer
-     * @ORM\ManyToOne(targetEntity="App\Entity\Writer", inversedBy="books")
      */
-    private $author;
+    #[ORM\ManyToOne(targetEntity: Writer::class, inversedBy: 'books')]
+    private ?Writer $author = null;
 
     /**
      * @var \DateTimeInterface
-     * @ORM\Column(type="date")
      */
-    private $publishDate;
+    #[ORM\Column(type: 'date')]
+    private ?\DateTimeInterface $publishDate = null;
 
     /**
      * @var integer
-     * @ORM\Column(type="integer")
      */
-    private $nbPage;
+    #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank(message: "Le nombre de page du livre est obligatoire.")]
+    #[Assert\Positive(message: "Le nombre de page doit être positif.")]
+    private ?int $nbPage = null;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
-    private $summary;
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: "Le résumé du livre est obligatoire.")]
+    #[Assert\Length(min: 50, minMessage: "Le résumé du livre doit contenir au moins 50 caractères.")]
+    private ?string $summary = null;
 
     /**
      * @var float
-     * @ORM\Column(type="float")
      */
-    private $price;
+    #[ORM\Column(type: 'float')]
+    #[Assert\NotBlank(message: "Le prix du livre est obligatoire.")]
+    #[Assert\Positive(message: "Le prix doit être positif.")]
+    private ?float $price = null;
 
     /**
      * Book constructor.
-     * @param string $isnb
-     * @param string $title
-     * @param Individual $author
-     * @param \DateTimeInterface $publishDate
-     * @param int $nbPage
-     * @param string $summary
-     * @param float $price
      */
-    public function __construct(string $isnb, string $title, Individual $author, \DateTimeInterface $publishDate, int $nbPage, string $summary, float $price)
+    public function __construct(string $isnb, string $title, Writer $author, \DateTimeInterface $publishDate, int $nbPage, string $summary, float $price)
     {
         $this->isnb = $isnb;
         $this->title = $title;
@@ -81,73 +85,154 @@ class Book
     }
 
     /**
-     * @return mixed
+     * @return ?int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getIsnb(): string
+    public function getIsnb(): ?string
     {
         return $this->isnb;
     }
 
+
     /**
-     * @return string
+     * Set the value of isnb
+     *
+     * @param ?string $isnb
+     *
+     * @return self
      */
-    public function getTitle(): string
+    public function setIsnb(?string $isnb): self
+    {
+        $this->isnb = $isnb;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
+
     /**
-     * @return Individual
+     * Set the value of title
+     *
+     * @param ?string $title
+     *
+     * @return self
      */
-    public function getAuthor(): Individual
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Writer
     {
         return $this->author;
     }
 
+
     /**
-     * @return \DateTimeInterface
+     * Set the value of author
+     *
+     * @param ?Writer $author
+     *
+     * @return self
      */
-    public function getPublishDate(): \DateTimeInterface
+    public function setAuthor(?Writer $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getPublishDate(): ?\DateTimeInterface
     {
         return $this->publishDate;
     }
 
+
     /**
-     * @return int
+     * Set the value of publishDate
+     *
+     * @param ?\DateTimeInterface $publishDate
+     *
+     * @return self
      */
-    public function getNbPage(): int
+    public function setPublishDate(?\DateTimeInterface $publishDate): self
+    {
+        $this->publishDate = $publishDate;
+
+        return $this;
+    }
+
+    public function getNbPage(): ?int
     {
         return $this->nbPage;
     }
 
+
     /**
-     * @return string
+     * Set the value of nbPage
+     *
+     * @param ?int $nbPage
+     *
+     * @return self
      */
-    public function getSummary(): string
+    public function setNbPage(?int $nbPage): self
+    {
+        $this->nbPage = $nbPage;
+
+        return $this;
+    }
+
+    public function getSummary(): ?string
     {
         return $this->summary;
     }
 
+
     /**
-     * @return float
+     * Set the value of summary
+     *
+     * @param ?string $summary
+     *
+     * @return self
      */
-    public function getPrice(): float
+    public function setSummary(?string $summary): self
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
+
     /**
-     * @return string
+     * Set the value of price
+     *
+     * @param ?float $price
+     *
+     * @return self
      */
-    public function getMedia(): string
+    public function setPrice(?float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getMedia(): ?string
     {
         return 'book';
     }

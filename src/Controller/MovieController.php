@@ -7,24 +7,24 @@ use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MovieController extends AbstractController
+final class MovieController extends AbstractController
 {
-    /**
-     * @Route("/films/", name="movie_list")
-     */
+    public function __construct(private MovieRepository $movieRepository)
+    {}
+
+    #[Route(path: '/films', name: 'movie_list')]
     public function list(): Response
     {
-        $movies = $this->get(MovieRepository::class)->findAll();
+        $movies = $this->movieRepository->findAll();
 
         return $this->render('movie/list.html.twig', [
             'movies' => $movies,
         ]);
     }
-    /**
-     * @Route("/film/{id}", name="movie_detail")
-     */
+    #[Route(path: '/film/{id}', name: 'movie_detail', requirements: ['id' => '\d+'])]
     public function detail(Movie $movie): Response
     {
         return $this->render('movie/detail.html.twig', [
@@ -32,16 +32,23 @@ class MovieController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/film/{id}/ajouter-au-panier", name="movie_add_to_cart")
-     */
-    public function addToCart(Movie $movie): Response
+    #[Route(path: '/film/{id}/ajouter-au-panier', name: 'movie_add_to_cart', requirements: ['id' => '\d+'])]
+    public function addToCart(Movie $movie, SessionInterface $session): Response
     {
-        $session = $this->get('session');
-
         $cart = $session->get('cart', []);
-        $cart[$movie->getAsin()] = [ 'item' => $movie , 'qty' => ($cart[$movie->getAsin()]['qty'] ?? 0) + 1 ];
+        $cartKey = $movie->getAsin();
+
+        // Récupération de la quantité déjà présente dans le panier, sinon 0.
+        $currentQuantity = $cart[$cartKey]['qty'] ?? 0;
+
+        $cart[$cartKey] = [ 'item' => $movie , 'qty' => $currentQuantity + 1 ];
         $session->set('cart', $cart);
+
+        // Ajout d'un message flash indiquant que le livre est bien ajouté au panier
+        $this->addFlash(
+            'success',
+            'Le film <strong>' . $movie->getTitle() . '</strong> a bien été ajouter au panier.'
+        );
 
         return $this->detail($movie);
     }

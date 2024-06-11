@@ -5,10 +5,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- */
-class BluRay extends Movie
+#[ORM\Entity]
+final class BluRay extends Movie
 {
     public function getMedia(): string
     {

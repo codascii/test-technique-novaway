@@ -3,84 +3,84 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Interface\PriceInterface;
+use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\MovieRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discriminator", type="string")
- * @ORM\DiscriminatorMap({"dvd" = "Dvd", "br" = "BluRay"})
- */
-abstract class Movie
+#[ORM\InheritanceType("SINGLE_TABLE")]
+#[ORM\DiscriminatorColumn(name: "discriminator", type: "string")]
+#[ORM\DiscriminatorMap(["dvd" => "Dvd", "br" => "BluRay"])]
+#[ORM\Entity(repositoryClass: MovieRepository::class)]
+abstract class Movie implements PriceInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=10)
      */
-    private $asin;
+    #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\NotBlank(message: "L'ASIN du film est obligatoire.")]
+    #[Assert\Length(max: 10, maxMessage: "La longueur de l'ASIN du film ne doit pas excéder 10 caractères.")]
+    private ?string $asin = null;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "Le titre du film est obligatoire.")]
+    #[Assert\Length(min: 3, minMessage: "Le titre du film doit contenir au moins 3 caractères.")]
+    private ?string $title = null;
 
     /**
      * @var Director
-     * @ORM\ManyToOne(targetEntity="Director", inversedBy="movies")
      */
-    private $director;
+    #[ORM\ManyToOne(targetEntity: Director::class, inversedBy: 'movies')]
+    private ?Director $director = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|Actor[]
-     * @ORM\ManyToMany(targetEntity="Actor", cascade={"persist"}, fetch="EAGER")
      */
+    #[ORM\ManyToMany(targetEntity: Actor::class, cascade: ['persist'], fetch: 'EAGER')]
     private $cast;
 
     /**
      * @var \DateTimeInterface
-     * @ORM\Column(type="date")
      */
-    private $releaseDate;
+    #[ORM\Column(type: 'date')]
+    private ?\DateTimeInterface $releaseDate = null;
 
     /**
      * @var integer
-     * @ORM\Column(type="integer")
      */
-    private $duration;
+    #[ORM\Column(type: 'integer')]
+    #[Assert\Positive(message: "La durée du film doit être un nombre postif.")]
+    private ?int $duration = null;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
      */
-    private $summary;
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: "Le résumé du film est obligatoire.")]
+    #[Assert\Length(min: 50, minMessage: "Le résumé du film doit contenir au moins 50 caractères.")]
+    private ?string $summary = null;
 
     /**
      * @var float
-     * @ORM\Column(type="float")
      */
-    private $price;
+    #[ORM\Column(type: 'float')]
+    #[Assert\Positive(message: "Le prix doit être positif.")]
+    private ?float $price = null;
 
     /**
      * Movie constructor.
-     * @param $id
-     * @param string $asin
-     * @param string $title
-     * @param \DateTimeInterface $releaseDate
-     * @param int $duration
-     * @param string $summary
-     * @param float $price
-     * @param array $cast
+     * @param int $id
      */
-    public function __construct($id, string $asin, string $title, \DateTimeInterface $releaseDate, int $duration, string $summary, float $price, array $cast)
+    public function __construct(int $id, string $asin, string $title, \DateTimeInterface $releaseDate, int $duration, string $summary, float $price, array $cast)
     {
         $this->id = $id;
         $this->asin = $asin;
@@ -93,35 +93,71 @@ abstract class Movie
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId() :int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getAsin(): string
     {
         return $this->asin;
     }
 
+
     /**
-     * @return string
+     * Set the value of asin
+     *
+     * @param ?string $asin
+     *
+     * @return self
      */
+    public function setAsin(?string $asin): self
+    {
+        $this->asin = $asin;
+
+        return $this;
+    }
+
     public function getTitle(): string
     {
         return $this->title;
     }
 
+
     /**
-     * @return Individual
+     * Set the value of title
+     *
+     * @param ?string $title
+     *
+     * @return self
      */
-    public function getDirector(): Individual
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDirector(): ?Director
     {
         return $this->director;
+    }
+
+
+    /**
+     * Set the value of director
+     *
+     * @param ?Director $director
+     *
+     * @return self
+     */
+    public function setDirector(?Director $director): self
+    {
+        $this->director = $director;
+
+        return $this;
     }
 
     /**
@@ -132,40 +168,85 @@ abstract class Movie
         return $this->cast;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
     public function getReleaseDate(): \DateTimeInterface
     {
         return $this->releaseDate;
     }
 
+
     /**
-     * @return int
+     * Set the value of releaseDate
+     *
+     * @param ?\DateTimeInterface $releaseDate
+     *
+     * @return self
      */
+    public function setReleaseDate(?\DateTimeInterface $releaseDate): self
+    {
+        $this->releaseDate = $releaseDate;
+
+        return $this;
+    }
+
     public function getDuration(): int
     {
         return $this->duration;
     }
 
+
     /**
-     * @return string
+     * Set the value of duration
+     *
+     * @param ?int $duration
+     *
+     * @return self
      */
+    public function setDuration(?int $duration): self
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
     public function getSummary(): string
     {
         return $this->summary;
     }
 
+
     /**
-     * @return float
+     * Set the value of summary
+     *
+     * @param ?string $summary
+     *
+     * @return self
      */
+    public function setSummary(?string $summary): self
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
     public function getPrice(): float
     {
         return $this->price;
     }
 
+
     /**
-     * @return string
+     * Set the value of price
+     *
+     * @param ?float $price
+     *
+     * @return self
      */
+    public function setPrice(?float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
     abstract public function getMedia(): string;
 }

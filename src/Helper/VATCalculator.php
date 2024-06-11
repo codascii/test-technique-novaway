@@ -9,8 +9,8 @@ final class VATCalculator
     {
         return [
             'netPrice' => $price,
-            'vat' => $price * 0.2,
-            'rawPrice' => $price * 0.8,
+            'vat' => \round($price * 0.2, 2),
+            'rawPrice' => \round($price * 0.8, 2)
         ];
     }
 }

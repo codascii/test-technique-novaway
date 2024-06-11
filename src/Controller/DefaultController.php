@@ -7,13 +7,13 @@ use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends AbstractController
+final class DefaultController extends AbstractController
 {
     /** @var BookRepository */
-    private $bookRepository;
+    private ?BookRepository $bookRepository = null;
 
     /** @var MovieRepository */
-    private $filmRepository;
+    private ?MovieRepository $movieRepository = null;
 
     /**
      * DefaultController constructor.
@@ -29,14 +29,12 @@ class DefaultController extends AbstractController
         $this->movieRepository = $movieRepository;
     }
 
-    /**
-     * @Route("/", name="homepage")
-     */
+    #[Route(path: '/', name: 'homepage')]
     public function index()
     {
         return $this->render('default/index.html.twig', [
-            'lastBooks' => $this->bookRepository->getLastFour(),
-            'lastMovies' => $this->movieRepository->getLastFour(),
+            'lastBooks' => $this->bookRepository->getLast(),
+            'lastMovies' => $this->movieRepository->getLast(),
         ]);
     }
 }

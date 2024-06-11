@@ -3,39 +3,39 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\IndividualRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="MovieRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discriminator", type="string")
- * @ORM\DiscriminatorMap({"actor" = "Actor", "writer" = "Writer", "director" = "Director"})
- */
+#[ORM\InheritanceType("SINGLE_TABLE")]
+#[ORM\DiscriminatorColumn(name: "discriminator", type: "string")]
+#[ORM\DiscriminatorMap(["actor" => "Actor", "writer" => "Writer", "director" => "Director"])]
+#[ORM\Entity(repositoryClass: IndividualRepository::class)]
 abstract class Individual
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
-    private $firstname;
+    #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "Le prénom est obligatoire.")]
+    #[Assert\Length(min: 3, minMessage: "Le prénom doit contenir au moins 3 caractères.")]
+    private ?string $firstname = null;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
-    private $lastname;
+    #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "Le nom de famille est obligatoire.")]
+    #[Assert\Length(min: 3, minMessage: "Le nom de famille doit contenir au moins 3 caractères.")]
+    private ?string $lastname = null;
 
     /**
      * Individual constructor.
-     * @param string $firstname
-     * @param string $lastname
      */
     public function __construct(string $firstname, string $lastname)
     {
@@ -44,20 +44,53 @@ abstract class Individual
     }
 
     /**
-     * @return string
+     * Get the value of id
      */
-    public function getFirstname(): string
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
     /**
-     * @return string
+     * Set the value of firstname
+     *
+     * @param ?string $firstname
+     *
+     * @return self
      */
-    public function getLastname(): string
+    public function setFirstname(?string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
+    /**
+     * Set the value of lastname
+     *
+     * @param ?string $lastname
+     *
+     * @return self
+     */
+    public function setLastname(?string $lastname): self
+    {
+        $this->lastname = $lastname;
 
+        return $this;
+    }
+
+    public function displayName(): ?string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
 }

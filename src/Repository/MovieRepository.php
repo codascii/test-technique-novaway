@@ -22,12 +22,15 @@ class MovieRepository extends ServiceEntityRepository
     /**
      * @return mixed
      */
-    public function getLastFour(): array
+    public function getLast(int $limit = 4): array
     {
+        // Pour éviter que l'on mette une limite nulle ou négative
+        $limit = $limit < 1 ? 1 : $limit;
+
         return $this->createQueryBuilder('m')
             ->orderBy('m.releaseDate', 'DESC')
             ->setFirstResult(0)
-            ->setMaxResults(4)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }

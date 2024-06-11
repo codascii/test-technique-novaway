@@ -19,10 +19,10 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-    public function place(Order $order): string
+    public function place(Order $order): int
     {
         $this->_em->persist($order);
-        $this->_em->flush($order);
+        $this->_em->flush();
 
         return $order->getId();
     }

@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Liste de tous les livres - {{parent()}}
+{% endblock %}
+
 {% block body %}
-    <table class="table">
+    <h1 class="mb-4">Liste de tous les livres</h1>
+    <table class="table table-striped table-bordered">
         <tr>
             <th>ISNB </th>
             <th>Titre </th>
@@ -14,9 +19,9 @@
             <tr>
                 <td>{{ book.isnb }}</td>
                 <td>{{ book.title }}</td>
-                <td>{{ book.author.firstname }} {{ book.author.lastname }}</td>
+                <td>{{ book.author.displayName }}</td>
                 <td>{{ book.nbPage }}</td>
-                <td>{{ book.price }} €</td>
+                <td>{{ book.price|number_format(2, ',', '.') }} €</td>
                 <td><a href="{{ path('book_detail', { id : book.id }) }}">👁</a></td>
             </tr>
         {% endfor %}

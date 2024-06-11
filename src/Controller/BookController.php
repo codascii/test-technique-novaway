@@ -7,23 +7,25 @@ use App\Entity\Book;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class BookController extends AbstractController
+final class BookController extends AbstractController
 {
-    /**
-     * @Route("/livres/", name="book_list")
-     */
+    public function __construct(private BookRepository $bookRepository)
+    {}
+
+    #[Route(path: '/livres', name: 'book_list')]
     public function list(): Response
     {
-        $books = $this->get(BookRepository::class)->findAll();
+        $books = $this->bookRepository->findAll();
 
         return $this->render('book/list.html.twig', [
             'books' => $books,
         ]);
     }
 
-    #[Route('/livre/{id}', name: 'book_detail')]
+    #[Route('/livre/{id}', name: 'book_detail', requirements: ['id' => '\d+'])]
     public function detail(Book $book): Response
     {
         return $this->render('book/detail.html.twig', [
@@ -31,16 +33,23 @@ class BookController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/livre/{id}/ajouter-au-panier", name="book_add_to_cart")
-     */
-    public function addToCart(Book $book): Response
+    #[Route(path: '/livre/{id}/ajouter-au-panier', name: 'book_add_to_cart', requirements: ['id' => '\d+'])]
+    public function addToCart(Book $book, SessionInterface $session): Response
     {
-        $session = $this->get('session');
-
         $cart = $session->get('cart', []);
-        $cart[$book->getIsnb()] = [ 'item' => $book , 'qty' => ($cart[$book->getIsnb()]['qty'] ?? 0) + 1 ];
+        $cartKey = $book->getIsnb();
+
+        // Récupération de la quantité déjà présente dans le panier, sinon 0.
+        $currentQuantity = $cart[$cartKey]['qty'] ?? 0;
+
+        $cart[$cartKey] = [ 'item' => $book , 'qty' => $currentQuantity + 1 ];
         $session->set('cart', $cart);
+
+        // Ajout d'un message flash indiquant que le livre est bien ajouté au panier
+        $this->addFlash(
+            'success',
+            'Le livre <strong>' . $book->getTitle() . '</strong> a bien été ajouter au panier.'
+        );
 
         return $this->detail($book);
     }

@@ -5,9 +5,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- */
-class Actor extends Individual
+#[ORM\Entity]
+final class Actor extends Individual
 {
 }

@@ -6,9 +6,14 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
+import '../../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import '../css/app.scss';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-// import $ from 'jquery';
+import $ from 'jquery';
 
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})

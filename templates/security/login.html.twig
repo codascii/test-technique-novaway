@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Connexion - {{parent()}}
+{% endblock %}
+
 {% block body %}
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -19,7 +23,10 @@
                     </br>
                     <div class="wrapper">
                         <span class="group-btn">
-                            <button type="submit" class="btn btn-primary btn-md">Connexion</button>
+                            <button type="submit" class="btn btn-primary btn-md">
+                                <span>Connexion</span>
+                                <i class="bi bi-box-arrow-in-right"></i>
+                            </button>
                         </span>
                     </div>
                 </form>

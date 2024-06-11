@@ -3,65 +3,61 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Helper\CartHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CartController extends AbstractController
+final class CartController extends AbstractController
 {
-    /**
-     * @Route("/panier/", name="cart_detail")
-     */
+    private ?SessionInterface $session = null;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->session = $requestStack->getSession();
+    }
+    
+    #[Route(path: '/panier', name: 'cart_detail')]
     public function listing(): Response
     {
-        $session = $this->get('session');
-        $cart = $session->get('cart', []);
+        $cart = $this->session->get('cart', []);
 
         return $this->render('cart/detail.html.twig', [
             'cart' => $cart,
-            'totalPrice' => array_sum(array_map(function ($item) {
-                return $item['item']->getPrice() * $item['qty'];
-            }, $cart)),
+            'totalPrice' => CartHelper::getTotalPrice($cart),
         ]);
     }
 
-    /**
-     * @Route("/panier/supprimer/{key}", name="cart_remove")
-     */
-    public function delete($key): Response
+    #[Route(path: '/panier/supprimer/{key}', name: 'cart_remove', requirements: ['key' => '[A-Z0-9]+'])]
+    public function delete(string $key): Response
     {
-        $session = $this->get('session');
-        $cart = $session->get('cart', []);
+        $cart = $this->session->get('cart', []);
         unset($cart[$key]);
-        $session->set('cart', $cart);
+        $this->session->set('cart', $cart);
 
         return $this->listing();
     }
 
-    /**
-     * @Route("/panier/ajouter/{key}", name="cart_increase")
-     */
-    public function increase($key): Response
+    #[Route(path: '/panier/ajouter/{key}', name: 'cart_increase', requirements: ['key' => '[A-Z0-9]+'])]
+    public function increase(string $key): Response
     {
-        $session = $this->get('session');
-        $cart = $session->get('cart', []);
+        $cart = $this->session->get('cart', []);
         ++$cart[$key]['qty'];
-        $session->set('cart', $cart);
+        $this->session->set('cart', $cart);
 
         return $this->listing();
     }
 
-    /**
-     * @Route("/panier/retirer/{key}", name="cart_decrease")
-     */
-    public function decrease($key): Response
+    #[Route(path: '/panier/retirer/{key}', name: 'cart_decrease', requirements: ['key' => '[A-Z0-9]+'])]
+    public function decrease(string $key): Response
     {
-        $session = $this->get('session');
-        $cart = $session->get('cart', []);
+        $cart = $this->session->get('cart', []);
         $qty = $cart[$key]['qty']--;
 
         if($qty > 0) {
-            $session->set('cart', $cart);
+            $this->session->set('cart', $cart);
             return $this->listing();
         } else {
             return $this->delete($key);

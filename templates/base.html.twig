@@ -2,44 +2,76 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
+        <link rel="shortcut icon" href="/img/favicon.jpg" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="theme-color" content="#61A52E" />
+        <meta name="title" content="Buy More" />
+        <meta name="description" content="Découvrez Buy More, votre boutique en ligne dédiée aux livres et films. Explorez notre vaste collection et trouvez les meilleures offres sur vos titres préférés. Achetez facilement et en toute sécurité !" />
         <title>{% block title %}Buy More{% endblock %}</title>
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.novaway.fr/" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:title" content="Buy More" />
+        <meta property="og:description" content="Découvrez Buy More, votre boutique en ligne dédiée aux livres et films. Explorez notre vaste collection et trouvez les meilleures offres sur vos titres préférés. Achetez facilement et en toute sécurité !" />
+        <meta property="og:image" content="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" />
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://www.novaway.fr/" />
+        <meta property="twitter:title" content="Buy More" />
+        <meta
+            property="twitter:description"
+            content="Découvrez Buy More, votre boutique en ligne dédiée aux livres et films. Explorez notre vaste collection et trouvez les meilleures offres sur vos titres préférés. Achetez facilement et en toute sécurité !"
+        />
+        <meta property="twitter:image" content="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" />
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
     <body>
 
-            <header class="header container clearfix">
-                <nav>
+        <header class="header clearfix mb-5">
+            <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ path('homepage') }}">
+                        <img src="/img/BuyMoreLogo.png" alt="Buy More Logo" width="200">
+                    </a>
                     <ul class="nav nav-pills float-right">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('cart_detail') }}">
-                                Panier ({{ app.session.get('cart')|length }})
+                            <a class="nav-link text-secondary" href="{{ path('cart_detail') }}">
+                                <span>Panier ({{ app.session.get('cart')|length }})</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            {% if is_granted('ROLE_USER') %}
-                                <a class="nav-link" href="{{ path('logout') }}">Déconnexion</a>
-                                {{ app.user.email }}
-                            {% else %}
-                                <a class="nav-link" href="{{ path('login') }}">Connexion</a>
-                            {% endif %}
-                        </li>
+                        {% if is_granted('ROLE_USER') %}
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary" href="{{ path('logout') }}">Déconnexion</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light disabled" href="#">{{ app.user.email }}</a>                                
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary" href="{{ path('login') }}">Connexion</a>
+                            </li>
+                        {% endif %}
                     </ul>
-                </nav>
-                <h3 class="text-muted"><a href="{{ path('homepage') }}"><img src="/img/BuyMoreLogo.png" alt=""></a></h3>
-            </header>
-
-            <main role="main" class="container">
-            {% block body %}{% endblock %}
-            </main>
-            <footer class="footer">
-                <div class="container">
-                    <span class="text-muted">© Novaway 2023</span>
                 </div>
-            </footer>
-            {% block javascripts %}{% endblock %}
+            </nav>
+        </header>
+
+        <main role="main" class="container">
+            {% block body %}{% endblock %}
+        </main>
+        <footer class="footer">
+            <div class="container d-flex justify-content-between">
+                <span class="text-muted">&copy; Novaway 2023</span>
+                <span>Redesigned with ❤️ by <a href="https://github.com/codascii" target="_blank">Mohamed HOUMADI</a></span>
+            </div>
+        </footer>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
 
     </body>
 </html>

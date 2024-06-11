@@ -1,8 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {{ movie.title }} - {{parent()}}
+{% endblock %}
+
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="flash-success">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span>{{ message|raw }}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+    
     <h2>{{ movie.title }}</h2>
-    <h3>{{ movie.director.firstname }} {{ movie.director.lastname }} - {{ movie.price }} €</h3>
+    <h3>{{ movie.director.displayName }} - {{ movie.price|number_format(2, ',', '.') }} €</h3>
     <p><strong>Format :</strong> {{ movie.media }}</p>
     <p><strong>ASIN :</strong> {{ movie.asin }}</p>
     <p><strong>Durée :</strong> {{ movie.duration }} minutes</p>
@@ -16,5 +31,8 @@
     <p><strong>Résumé</strong></p>
     <p>{{ movie.summary }}</p>
 
-    <a href="{{ path('movie_add_to_cart', { id : movie.id }) }}" class="btn btn-primary">Ajouter au panier</a>
+    <a href="{{ path('movie_add_to_cart', { id : movie.id }) }}" class="btn btn-primary btn-lg">
+        <i class="bi bi-cart-plus"></i>
+        <span>Ajouter au panier</span>
+    </a>
 {% endblock %}
